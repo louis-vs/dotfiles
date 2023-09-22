@@ -1,0 +1,22 @@
+{
+  "$schema" : "https:\/\/app.linearmouse.org\/schema\/0.7.3",
+  "schemes" : [
+    {
+      "pointer" : {
+        "acceleration" : 0.6875,
+        "disableAcceleration" : true
+      },
+      "if" : {
+        "device" : {
+          "productName" : "MM711 Gaming Mouse",
+          "productID" : "0x101",
+          "category" : "mouse",
+          "vendorID" : "0x2516"
+        }
+      },
+      "scrolling" : {
+        "distance" : 3
+      }
+    }
+  ]
+}

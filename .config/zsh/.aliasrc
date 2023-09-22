@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# standard stuff
+alias \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	bc="bc -ql" \
+	mkdir="mkdir -pv"
+
+# use colors where possible
+alias \
+	ls="ls -h --color=auto" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto"
+
+# abbreviations
+alias \
+	ll="ls -hlA --color=auto" \
+	la="ls -hAC --color=auto"
+
+# wget: clean up home
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+
+# yarn: clean up home
+alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/yarnrc"'
+
+# manage dotfiles using git
+alias lgdf="lazygit --git-dir=\"$XDG_CONFIG_HOME/dotfiles\" --work-tree=\"$HOME\""
+alias gitdf="git --git-dir=\"$XDG_CONFIG_HOME/dotfiles\" --work-tree=\"$HOME\""

@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+antigen use oh-my-zsh
+
+# load plugins
+antigen bundles <<EOBUNDLES
+  agkozak/zsh-z
+  zdharma-continuum/fast-syntax-highlighting
+  zsh-users/zsh-autosuggestions@master
+  mbenford/zsh-tmux-auto-title
+EOBUNDLES
+#  lukechilds/zsh-nvm
+
+antigen theme romkatv/powerlevel10k
+
+antigen apply
