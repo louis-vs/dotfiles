@@ -10,9 +10,6 @@ export EDITOR="nvim"
 # personal environment variables
 export NVIM_CONFIG="$XDG_CONFIG_HOME/nvim"
 
-# load aliases
-[ -f "$ZDOTDIR/.aliasrc" ] && source "$ZDOTDIR/.aliasrc"
-
 # enable colors
 autoload -U colors && colors
 
@@ -100,3 +97,6 @@ fi
 
 # fuzzyfinder
 [ -f "$ZDOTDIR/.fzf.zsh" ] && source "$ZDOTDIR/.fzf.zsh"
+
+# load aliases
+[ -f "$ZDOTDIR/.aliasrc" ] && source "$ZDOTDIR/.aliasrc"

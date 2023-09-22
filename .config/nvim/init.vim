@@ -97,6 +97,10 @@ if has('nvim')
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/nvim-cmp'
+    " snippets
+    Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
+    Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'rafamadriz/friendly-snippets'
     " nvim-tree file browser
     Plug 'nvim-tree/nvim-tree.lua'
     Plug 'nvim-tree/nvim-web-devicons'
@@ -292,6 +296,7 @@ let g:csv_bind_B = 1
 
 " Vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_base_dir = stdpath("config") . '/vimspector'
 
 " NVIM plugin config
 if has('nvim')
@@ -309,6 +314,9 @@ if has('nvim')
 
     " load lua options
     source <sfile>:h/config.lua
+
+    " mappings
+    nnoremap <silent> <leader>q <cmd>lua vim.lsp.buf.code_action()<CR>
 endif
 
 " CHADTree

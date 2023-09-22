@@ -82,9 +82,6 @@ brew install p7zip
 # fuzzy finder
 brew install fzf
 
-# cat but better
-brew install bat
-
 # grep but better
 brew install ripgrep
 
@@ -95,6 +92,15 @@ brew install tpm
 
 # nice git TUI
 brew install lazygit
+
+# cat but better
+brew install bat
+# bat but prettier
+brew install glow
+
+
+# language servers
+brew install lua-language-server
 
 # CASKS
 brew install alacritty
