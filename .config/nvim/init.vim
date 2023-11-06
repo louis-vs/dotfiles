@@ -72,6 +72,8 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 if has('nvim')
+    " dependency for many plugins
+    Plug 'nvim-lua/plenary.nvim'
     " smart code structure analysis
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     " auto close brackets
@@ -101,9 +103,16 @@ if has('nvim')
     Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'rafamadriz/friendly-snippets'
+    " automatic refactoring (requires plenary.nvim)
+    "Plug 'ThePrimeagen/refactoring.nvim'
     " nvim-tree file browser
     Plug 'nvim-tree/nvim-tree.lua'
     Plug 'nvim-tree/nvim-web-devicons'
+    " obsidian integration (requires plenary.nvim)
+    Plug 'epwalsh/obsidian.nvim' 
+    " better folding
+    Plug 'kevinhwang91/promise-async'
+    Plug 'kevinhwang91/nvim-ufo'
 endif
 
 call plug#end()
@@ -117,6 +126,7 @@ set nowrap
 
 " scrolling
 set scrolloff=3
+set smoothscroll
 
 " autocompletion
 set wildmode=longest,list,full
@@ -300,11 +310,6 @@ let g:vimspector_base_dir = stdpath("config") . '/vimspector'
 
 " NVIM plugin config
 if has('nvim')
-    " tabs with barbar
-    "nor <silent>    gt <Cmd>BufferNext<CR>
-    "nor <silent>    gT <Cmd>BufferPrevious<CR>
-    "command Bc :BufferClose
-
     " if git commit is run in the integrated terminal, use nvr to edit commit
     " message
     let $GIT_EDITOR = 'nvr -cc split --remote-wait'
@@ -313,64 +318,5 @@ if has('nvim')
     autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
     " load lua options
-    source <sfile>:h/config.lua
-
-    " mappings
-    nnoremap <silent> <leader>q <cmd>lua vim.lsp.buf.code_action()<CR>
+    lua require'config'
 endif
-
-" CHADTree
-"nor <leader>n <cmd>CHADopen<cr>
-"let g:chadtree_settings = {
-"    \"theme": {
-"        \"text_colour_set": "nord",
-"        \"icon_colour_set": "github"
-"    \},
-"    \"view": {
-"        \"sort_by": ["is_folder", "file_name"],
-"        \"width": 35
-"    \}
-"\}
-" coq
-" Set recommended to false
-"let g:coq_settings = {
-"    \"match.max_results": 5,
-"    \"display.mark_highlight_group": "Pmenu",
-"    \"display.preview.border": [ 
-"        \["", "NormalFloat"],
-"        \["", "NormalFloat"],
-"        \["", "NormalFloat"],
-"        \[" ", "NormalFloat"],
-"        \["", "NormalFloat"],
-"        \["", "NormalFloat"],
-"        \["", "NormalFloat"],
-"        \[" ", "NormalFloat"]
-"    \],
-"    \"keymap": {
-"        \"recommended": v:false,
-"        \"jump_to_mark": "<c-n>",
-"        \"pre_select": v:true
-"    \}
-"\}
-
-" coq keybindings
-"nor <leader>a  :COQnow<CR>
-"ino <silent><expr> <CR>    pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
-"ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
-"ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
-"ino <silent><expr> <BS>    pumvisible() ? "\<C-e>\<BS>"  : "\<BS>"
-"ino <silent><expr> <Tab>   pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<Tab>"
-
-" ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-" ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
-
-" get around incompatibility with vim-endwise whilst allowing <CR> to break out 
-" of coq suggestions
-"inoremap <silent> <CR> <C-r>=<SID>coc_confirm()<CR>
-"function! s:coc_confirm() abort
-"  if pumvisible()
-"    return "\<C-e>\<CR>"
-"  else
-"    return "\<CR>"
-"  endif
-"endfunction
