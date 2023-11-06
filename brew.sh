@@ -102,7 +102,14 @@ brew install glow
 # language servers
 brew install lua-language-server
 
+
+# ocr enginge
+brew install tesseract
+brew install tesseract-lang
+
+##############################################
 # CASKS
+##############################################
 brew install alacritty
 brew install font-fira-code-nerd-font
 brew install wireshark
@@ -113,6 +120,13 @@ brew install obsidian
 brew install middleclick
 brew install linearmouse
 brew install notunes
+
+
+##############################################
+# pip modules
+##############################################
+pip install --upgrade pip
+pip install ocrmypdf
 
 
 brew cleanup
