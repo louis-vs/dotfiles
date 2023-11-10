@@ -22,6 +22,13 @@ vim.g.loaded_netrwPlugin = 1
 
 require('nvim-tree').setup {
     sync_root_with_cwd = true,
+    filters = {
+        git_ignored = false,
+        custom = {  '^.DS_Store$' },
+    },
+    update_focused_file = {
+        enable = true,
+    }
 }
 vim.api.nvim_set_keymap('n', '<leader>n', '<cmd>NvimTreeToggle<CR>', { noremap = true })
 
