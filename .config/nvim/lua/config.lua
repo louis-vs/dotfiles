@@ -158,6 +158,13 @@ capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
 }
+
+local tsserverOpts = {
+    indentSize = vim.o.shiftwidth,
+    convertTabsToSpaces = vim.o.expandtab,
+    tabSize = vim.o.tabstop,
+}
+
 require("mason-lspconfig").setup_handlers {
     -- The first entry (without a key) will be the default handler
     -- and will be called for each installed server that doesn't have
@@ -195,6 +202,18 @@ require("mason-lspconfig").setup_handlers {
             },
         }
     end,
+    ["tsserver"] = function ()
+        require'lspconfig'.tsserver.setup {
+            capabilities = capabilities,
+            settings = {
+                typescript = tsserverOpts,
+                javascript = tsserverOpts,
+                completions = {
+                    completeFunctionCalls = true,
+                }
+            }
+        }
+    end,
 }
 
 -- see :help lspconfig-keybindings
@@ -211,6 +230,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>r', vim.lsp.buf.references, opts)
         vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>T', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, opts)
         vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
