@@ -56,6 +56,8 @@ export NVM_COMPLETION=true
 export NVM_AUTO_USE=true
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 
+[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"  # This loads nvm
+
 # make local libs available to compiler and executer
 export C_INCLUDE_PATH="/usr/local/include:$C_INCLUDE_PATH"
 export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
