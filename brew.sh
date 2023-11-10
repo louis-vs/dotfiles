@@ -3,7 +3,6 @@
 # (make sure you install homebrew itself first!)
 
 # casks
-brew tap homebrew/cask
 brew tap homebrew/cask-fonts
 
 # wine-crossover
