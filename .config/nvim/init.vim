@@ -35,6 +35,8 @@ if !has('nvim')
     Plug 'jiangmiao/auto-pairs'
     " close blocks in e.g. ruby, vimscript
     Plug 'tpope/vim-endwise'
+    " close XML-style tags automatically
+    Plug 'alvan/vim-closetag'
 endif
 
 " basic syntax highlighting for all languages
@@ -54,8 +56,6 @@ Plug 'tpope/vim-fugitive'
 
 " goyo, for distraction-free document editing
 Plug 'junegunn/goyo.vim'
-" close XML-style tags automatically
-Plug 'alvan/vim-closetag'
 " quickly surround text objects
 Plug 'tpope/vim-surround'
 " make '.' behave better with plugins
@@ -76,11 +76,11 @@ if has('nvim')
     Plug 'nvim-lua/plenary.nvim'
     " smart code structure analysis
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    " auto close brackets
+    " auto close brackets with TS
     Plug 'windwp/nvim-autopairs'
-    " auto close, rename XML-style tags
+    " auto close, rename XML-style tags with TS
     Plug 'windwp/nvim-ts-autotag'
-    " auto close blocks with 'end'
+    " auto close blocks with 'end' with TS
     Plug 'RRethy/nvim-treesitter-endwise'
     " better tabs
     "Plug 'romgrk/barbar.nvim'

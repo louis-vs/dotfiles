@@ -8,6 +8,7 @@ vim.cmd("colorscheme kanagawa")
 require("nvim-autopairs").setup {}
 
 require('nvim-treesitter.configs').setup {
+    auto_install = true,
     autotag = {
         enable = true,
     },
@@ -146,7 +147,12 @@ require('tabby.tabline').use_preset('active_wins_at_tail', { })
 -- manage language servers
 require("mason").setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "clangd", "lua_ls" },
+    ensure_installed = {
+        "clangd",
+        "lua_ls",
+        "tsserver",
+        "eslint",
+    },
     automatic_installation = true,
 }
 
@@ -157,12 +163,6 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
-}
-
-local tsserverOpts = {
-    indentSize = vim.o.shiftwidth,
-    convertTabsToSpaces = vim.o.expandtab,
-    tabSize = vim.o.tabstop,
 }
 
 require("mason-lspconfig").setup_handlers {
@@ -206,8 +206,34 @@ require("mason-lspconfig").setup_handlers {
         require'lspconfig'.tsserver.setup {
             capabilities = capabilities,
             settings = {
-                typescript = tsserverOpts,
-                javascript = tsserverOpts,
+                typescript = {
+                    indentSize = vim.o.shiftwidth,
+                    convertTabsToSpaces = vim.o.expandtab,
+                    tabSize = vim.o.tabstop,
+                    inlayHints = {
+                        includeInlayParameterNameHints = "literal",
+                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                        includeInlayFunctionParameterTypeHints = false,
+                        includeInlayVariableTypeHints = false,
+                        includeInlayPropertyDeclarationTypeHints = false,
+                        includeInlayFunctionLikeReturnTypeHints = true,
+                        includeInlayEnumMemberValueHints = true,
+                    },
+                },
+                javascript = {
+                    indentSize = vim.o.shiftwidth,
+                    convertTabsToSpaces = vim.o.expandtab,
+                    tabSize = vim.o.tabstop,
+                    inlayHints = {
+                        includeInlayParameterNameHints = "all",
+                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                        includeInlayFunctionParameterTypeHints = true,
+                        includeInlayVariableTypeHints = true,
+                        includeInlayPropertyDeclarationTypeHints = true,
+                        includeInlayFunctionLikeReturnTypeHints = true,
+                        includeInlayEnumMemberValueHints = true,
+                    },
+                },
                 completions = {
                     completeFunctionCalls = true,
                 }
