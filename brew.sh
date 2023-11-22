@@ -111,8 +111,8 @@ brew install tesseract-lang
 ##############################################
 brew install alacritty
 brew install font-fira-code-nerd-font
-brew install wireshark
-brew install syncthing
+brew install homebrew/cask/wireshark
+brew install homebrew/cask/syncthing
 brew install obsidian
 
 # macos tweaks
