@@ -84,6 +84,9 @@ brew install fzf
 # grep but better
 brew install ripgrep
 
+# find but better
+brew install fd
+
 # terminal multiplexer
 brew install tmux
 # plugin manager for tmux
