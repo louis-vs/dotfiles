@@ -26,7 +26,6 @@ mason_lsp.setup({
     "jsonls",
     "lua_ls",
     "prismals",
-    --"tailwindcss"
   },
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
   -- This setting has no relation with the `ensure_installed` setting.
@@ -38,18 +37,12 @@ mason_lsp.setup({
   automatic_installation = true,
 })
 
-local lspconfig = require("lspconfig")
-
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     silent = true,
     border = "rounded",
   }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-  ["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    { virtual_text = true }
-  ),
 }
 
 local function on_attach(client, bufnr)
@@ -62,54 +55,6 @@ capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
-
--- Order matters
-
---lspconfig.tailwindcss.setup({
---  capabilities = require("lsp.servers.tailwindcss").capabilities,
---  filetypes = require("lsp.servers.tailwindcss").filetypes,
---  handlers = handlers,
---  init_options = require("lsp.servers.tailwindcss").init_options,
---  on_attach = require("lsp.servers.tailwindcss").on_attach,
---  settings = require("lsp.servers.tailwindcss").settings,
---})
-
-lspconfig.eslint.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = require("lsp.servers.eslint").on_attach,
-  settings = require("lsp.servers.eslint").settings,
-})
-
-lspconfig.jsonls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  settings = require("lsp.servers.jsonls").settings,
-})
-
-lspconfig.lua_ls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  settings = require("lsp.servers.lua_ls").settings,
-})
-
---lspconfig.vuels.setup({
---  filetypes = require("lsp.servers.vuels").filetypes,
---  handlers = handlers,
---  init_options = require("lsp.servers.vuels").init_options,
---  on_attach = require("lsp.servers.vuels").on_attach,
---  settings = require("lsp.servers.vuels").settings,
---})
-
-for _, server in ipairs({ "bashls", "emmet_ls", "graphql", "html", "prismals" }) do
-  lspconfig[server].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    handlers = handlers,
-  })
-end
 
 mason_lsp.setup_handlers {
     -- The first entry (without a key) will be the default handler
@@ -130,8 +75,32 @@ mason_lsp.setup_handlers {
             cmd = { 'clangd', '--enable-config' },
         }
     end,
+    ["lua_ls"] = function ()
+        require'lspconfig'.lua_ls.setup{
+            on_attach = on_attach,
+            capabilities = capabilities,
+            handlers = handlers,
+            settings = require("lsp.servers.lua_ls").settings,
+        }
+    end,
+    ["eslint"] = function ()
+        require'lspconfig'.eslint.setup {
+            capabilities = capabilities,
+            handlers = handlers,
+            on_attach = require("lsp.servers.eslint").on_attach,
+            settings = require("lsp.servers.eslint").settings,
+        }
+    end,
+    ["jsonls"] = function ()
+        require'lspconfig'.jsonls.setup {
+            capabilities = capabilities,
+            handlers = handlers,
+            on_attach = on_attach,
+            settings = require("lsp.servers.jsonls").settings,
+        }
+    end,
 }
 
 require("ufo").setup({
-  close_fold_kinds = { "imports" },
+  --close_fold_kinds = { "imports" },
 })

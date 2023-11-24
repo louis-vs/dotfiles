@@ -1,5 +1,6 @@
 -- bootstrap lazy (from readme)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+---@diagnostic disable-next-line: undefined-field
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -16,7 +17,7 @@ require("lazy").setup("config.plugins", {
   defaults = { lazy = true },
   install = { colorscheme = { "kanagawa" } },
   checker = { enabled = true },
-  concurrency = 5,
+  --concurrency = 5,
   performance = {
     rtp = {
       disabled_plugins = {

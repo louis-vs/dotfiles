@@ -3,6 +3,7 @@ local options = {
   cmdheight      = 0,                       --- Give more space for displaying messages
   completeopt    = "menu,menuone,noselect", --- Better autocompletion
   cursorline     = true,                    --- Highlight of current line
+  colorcolumn    = '101',
   emoji          = false,                   --- Fix emoji display
   -- don't think i need these?
   --foldcolumn     = "0",
@@ -14,6 +15,7 @@ local options = {
   --laststatus     = 3,                       --- Have a global statusline at the bottom instead of one for each window
   mouse          = "a",                     --- Enable mouse
   number         = true,                    --- Shows current line number
+  numberwidth    = 5,
   pumheight      = 10,                      --- Max num of items in completion menu
   relativenumber = true,                    --- Enables relative number
   scrolloff      = 3,                       --- Always keep space when scrolling to bottom/top edge

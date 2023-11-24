@@ -12,6 +12,9 @@ keymap("n", "<C-j>", "<C-w>j", silent)
 keymap("n", "<C-k>", "<C-w>k", silent)
 keymap("n", "<C-l>", "<C-w>l", silent)
 
+-- Toggle wrap
+keymap("n", "<Leader>w", ":set wrap!<CR>:set linebreak!<CR>", silent)
+
 
 -- Don't yank on delete char
 keymap("n", "x", '"_x', silent)

@@ -1,7 +1,3 @@
-local actions    = require('telescope.actions')
-local previewers = require('telescope.previewers')
-local builtin    = require('telescope.builtin')
-
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('repo')
 --require('telescope').load_extension('git_worktree')
@@ -28,14 +24,14 @@ require('telescope').setup {
       },
       prompt_position = "top",
     },
-    file_sorter       = require('telescope.sorters').get_fzy_sorter,
+    --file_sorter       = require('telescope.sorters').get_fzy_sorter,
     prompt_prefix     = '  ',
     color_devicons    = true,
     git_icons         = git_icons,
     sorting_strategy  = "ascending",
-    file_previewer    = require('telescope.previewers').vim_buffer_cat.new,
-    grep_previewer    = require('telescope.previewers').vim_buffer_vimgrep.new,
-    qflist_previewer  = require('telescope.previewers').vim_buffer_qflist.new,
+    --file_previewer    = require('telescope.previewers').vim_buffer_cat.new,
+    --grep_previewer    = require('telescope.previewers').vim_buffer_vimgrep.new,
+    --qflist_previewer  = require('telescope.previewers').vim_buffer_qflist.new,
     mappings          = {
       i = {
         -- ["<C-h>"] = "which_key",

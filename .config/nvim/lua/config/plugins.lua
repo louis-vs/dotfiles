@@ -398,7 +398,7 @@ return {
       require("shade").toggle()
     end,
   },
-  -- fancy folds
+  -- fancy folds (note that setup is called manually in lsp.config)
   {
     "kevinhwang91/nvim-ufo",
     dependencies = "kevinhwang91/promise-async",
