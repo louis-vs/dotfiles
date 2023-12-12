@@ -25,5 +25,8 @@ require("typescript-tools").setup({
     tsserver_plugins = {
       "@styled/typescript-styled-plugin",
     },
+    jsx_close_tag = {
+      enable = false,
+    }
   },
 })

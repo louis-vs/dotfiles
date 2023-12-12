@@ -1,5 +1,5 @@
 require('telescope').load_extension('fzf')
-require('telescope').load_extension('repo')
+--require('telescope').load_extension('repo')
 --require('telescope').load_extension('git_worktree')
 
 local git_icons = {
@@ -17,7 +17,7 @@ require('telescope').setup {
     border            = true,
     hl_result_eol     = true,
     multi_icon        = '',
-    vimgrep_arguments = { },
+    --vimgrep_arguments = { },
     layout_config     = {
       horizontal = {
         preview_cutoff = 120,
@@ -41,8 +41,8 @@ require('telescope').setup {
   },
   extensions = {
     fzf = {
-      override_generic_sorter = false,
-      override_file_sorter = true,
+      --override_generic_sorter = false,
+      --override_file_sorter = true,
       case_mode = "smart_case",
     }
   }
