@@ -87,24 +87,24 @@ return {
     config = true, -- run require("stay-in-place").setup()
   },
   -- automate useful refactoring patterns
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    cmd = "Refactor",
-    keys = {
-      { "<leader>re", ":Refactor extract ",              mode = "x",          desc = "Extract function" },
-      { "<leader>rf", ":Refactor extract_to_file ",      mode = "x",          desc = "Extract function to file" },
-      { "<leader>rv", ":Refactor extract_var ",          mode = "x",          desc = "Extract variable" },
-      { "<leader>ri", ":Refactor inline_var",            mode = { "x", "n" }, desc = "Inline variable" },
-      { "<leader>rI", ":Refactor inline_func",           mode = "n",          desc = "Inline function" },
-      { "<leader>rb", ":Refactor extract_block",         mode = "n",          desc = "Extract block" },
-      { "<leader>rf", ":Refactor extract_block_to_file", mode = "n",          desc = "Extract block to file" },
-    },
-    config = true
-  },
+  --{
+  --  "ThePrimeagen/refactoring.nvim",
+  --  dependencies = {
+  --    "nvim-lua/plenary.nvim",
+  --    "nvim-treesitter/nvim-treesitter",
+  --  },
+  --  cmd = "Refactor",
+  --  keys = {
+  --    { "<leader>re", ":Refactor extract ",              mode = "x",          desc = "Extract function" },
+  --    { "<leader>rf", ":Refactor extract_to_file ",      mode = "x",          desc = "Extract function to file" },
+  --    { "<leader>rv", ":Refactor extract_var ",          mode = "x",          desc = "Extract variable" },
+  --    { "<leader>ri", ":Refactor inline_var",            mode = { "x", "n" }, desc = "Inline variable" },
+  --    { "<leader>rI", ":Refactor inline_func",           mode = "n",          desc = "Inline function" },
+  --    { "<leader>rb", ":Refactor extract_block",         mode = "n",          desc = "Extract block" },
+  --    { "<leader>rf", ":Refactor extract_block_to_file", mode = "n",          desc = "Extract block to file" },
+  --  },
+  --  config = true
+  --},
 
   -- LSP Base
   {
@@ -172,35 +172,35 @@ return {
   },
   { "onsails/lspkind-nvim" },
   -- automatically convert JS string to template string when ${} added
-  {
-    "axelvc/template-string.nvim",
-    event = "InsertEnter",
-    ft = {
-      "javascript",
-      "typescript",
-      "javascriptreact",
-      "typescriptreact",
-    },
-    config = true, -- run require("template-string").setup()
-  },
+  --{
+  --  "axelvc/template-string.nvim",
+  --  event = "InsertEnter",
+  --  ft = {
+  --    "javascript",
+  --    "typescript",
+  --    "javascriptreact",
+  --    "typescriptreact",
+  --  },
+  --  config = true, -- run require("template-string").setup()
+  --},
   -- typescript type checking using tsc
-  {
-    "dmmulroy/tsc.nvim",
-    cmd = { "TSC" },
-    config = true,
-  },
+  --{
+  --  "dmmulroy/tsc.nvim",
+  --  cmd = { "TSC" },
+  --  config = true,
+  --},
   -- replacement for VSCode peek to see definitions etc. at a glance
-  {
-    "dnlhc/glance.nvim",
-    config = true,
-    cmd = { "Glance" },
-    keys = {
-      { "gd", "<cmd>Glance definitions<CR>",      desc = "LSP Definition" },
-      { "gr", "<cmd>Glance references<CR>",       desc = "LSP References" },
-      { "gm", "<cmd>Glance implementations<CR>",  desc = "LSP Implementations" },
-      { "gy", "<cmd>Glance type_definitions<CR>", desc = "LSP Type Definitions" },
-    },
-  },
+  --{
+  --  "dnlhc/glance.nvim",
+  --  config = true,
+  --  cmd = { "Glance" },
+  --  keys = {
+  --    { "gd", "<cmd>Glance definitions<CR>",      desc = "LSP Definition" },
+  --    { "gr", "<cmd>Glance references<CR>",       desc = "LSP References" },
+  --    { "gm", "<cmd>Glance implementations<CR>",  desc = "LSP Implementations" },
+  --    { "gy", "<cmd>Glance type_definitions<CR>", desc = "LSP Type Definitions" },
+  --  },
+  --},
   -- auto refactor when you move things in nvim-tree
   {
     "antosha417/nvim-lsp-file-operations",
@@ -216,37 +216,37 @@ return {
 
   -- General
   -- quick switches (e.g. true->false) with :Switch
-  { "AndrewRadev/switch.vim", lazy = false },
+  --{ "AndrewRadev/switch.vim", lazy = false },
   -- auto split / join arrays etc.
-  {
-    "Wansmer/treesj",
-    lazy = true,
-    cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-    keys = {
-      { "gJ", "<cmd>TSJToggle<CR>", desc = "Toggle Split/Join" },
-    },
-    config = function()
-      require("treesj").setup({
-        use_default_keymaps = false,
-      })
-    end,
-  },
+  --{
+  --  "Wansmer/treesj",
+  --  lazy = true,
+  --  cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
+  --  keys = {
+  --    { "gJ", "<cmd>TSJToggle<CR>", desc = "Toggle Split/Join" },
+  --  },
+  --  config = function()
+  --    require("treesj").setup({
+  --      use_default_keymaps = false,
+  --    })
+  --  end,
+  --},
   -- auto commenting
-  {
-    "numToStr/Comment.nvim",
-    lazy = false,
-    dependencies = "JoosepAlviste/nvim-ts-context-commentstring",
-    config = true,
-  },
+  --{
+  --  "numToStr/Comment.nvim",
+  --  lazy = false,
+  --  dependencies = "JoosepAlviste/nvim-ts-context-commentstring",
+  --  config = true,
+  --},
   -- create fancy comments for e.g. a config file
-  {
-    "LudoPinelli/comment-box.nvim",
-    lazy = false,
-    keys = {
-      { "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", desc = "comment box" },
-      { "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", mode = "v",          desc = "comment box" },
-    }
-  },
+  --{
+  --  "LudoPinelli/comment-box.nvim",
+  --  lazy = false,
+  --  keys = {
+  --    { "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", desc = "comment box" },
+  --    { "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", mode = "v",          desc = "comment box" },
+  --  }
+  --},
   -- TODO better terminal
   --{
   --  "akinsho/toggleterm.nvim",
@@ -260,7 +260,7 @@ return {
   --  }
   --},
   -- make '.' behave better with plugins
-  { "tpope/vim-repeat",           lazy = false },
+  --{ "tpope/vim-repeat",           lazy = false },
   -- make <C-A> <C-X> work on dates
   { "tpope/vim-speeddating",      lazy = false },
   -- easily make markdown tables
@@ -283,32 +283,29 @@ return {
   --},
   -- better jumps
   -- TODO look into this one
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      char = {
-        keys = { "f", "F", "t", "T" },
-      }
-    },
-    keys = {
-      {
-        "s",
-        mode = { "n", "x", "o" },
-        function()
-          require("flash").jump()
-        end,
-      },
-    },
-  },
+  --{
+  --  "folke/flash.nvim",
+  --  event = "VeryLazy",
+  --  opts = {
+  --    char = {
+  --      keys = { "f", "F", "t", "T" },
+  --    }
+  --  },
+  --  keys = {
+  --    {
+  --      "s",
+  --      mode = { "n", "x", "o" },
+  --      function()
+  --        require("flash").jump()
+  --      end,
+  --    },
+  --  },
+  --},
   -- TODO find new keybindings!
   --{
   --  "folke/which-key.nvim",
   --  event = "VeryLazy",
-  --  lazy = true,
-  --  config = function()
-  --    require("plugins.which-key")
-  --  end,
+  --  config = true,
   --},
   -- better statusline TODO
   --{
@@ -353,11 +350,11 @@ return {
   --  end,
   --},
   -- nice NPM/Yarn shortcuts
-  {
-    "vuki656/package-info.nvim",
-    event = "BufEnter package.json",
-    config = true,
-  },
+  --{
+  --  "vuki656/package-info.nvim",
+  --  event = "BufEnter package.json",
+  --  config = true,
+  --},
   -- TODO look into this one
   --{
   --  "airblade/vim-rooter",
@@ -391,13 +388,13 @@ return {
     config = true,
   },
   -- dim inactive windows (TODO check if I actually want this)
-  {
-    "sunjon/shade.nvim",
-    config = function()
-      require("shade").setup()
-      require("shade").toggle()
-    end,
-  },
+  --{
+  --  "sunjon/shade.nvim",
+  --  config = function()
+  --    require("shade").setup()
+  --    require("shade").toggle()
+  --  end,
+  --},
   -- fancy folds (note that setup is called manually in lsp.config)
   {
     "kevinhwang91/nvim-ufo",
@@ -435,34 +432,34 @@ return {
     config = true,
   },
   -- add tailwind colours to cmp results
-  {
-    "js-everts/cmp-tailwind-colors",
-    config = true,
-  },
+  --{
+  --  "js-everts/cmp-tailwind-colors",
+  --  config = true,
+  --},
   -- auto fold long class attributes
-  {
-    "razak17/tailwind-fold.nvim",
-    opts = {
-      min_chars = 50,
-    },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ft = { "html", "svelte", "astro", "vue", "typescriptreact" },
-  },
+  --{
+  --  "razak17/tailwind-fold.nvim",
+  --  opts = {
+  --    min_chars = 50,
+  --  },
+  --  dependencies = { "nvim-treesitter/nvim-treesitter" },
+  --  ft = { "html", "svelte", "astro", "vue", "typescriptreact" },
+  --},
   -- shortcut to show actual CSS generated by tailwind
-  {
-    "MaximilianLloyd/tw-values.nvim",
-    keys = {
-      { "<Leader>cv", "<CMD>TWValues<CR>", desc = "Tailwind CSS values" },
-    },
-    opts = {
-      border = "rounded", -- Valid window border style,
-      show_unknown_classes = true                   -- Shows the unknown classes popup
-    }
-  },
+  --{
+  --  "MaximilianLloyd/tw-values.nvim",
+  --  keys = {
+  --    { "<Leader>cv", "<CMD>TWValues<CR>", desc = "Tailwind CSS values" },
+  --  },
+  --  opts = {
+  --    border = "rounded", -- Valid window border style,
+  --    show_unknown_classes = true                   -- Shows the unknown classes popup
+  --  }
+  --},
 
   -- Git
   -- togglable git highlighting and virtual text
-  {
+  --{
     "lewis6991/gitsigns.nvim",
     event = "BufRead",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -494,22 +491,22 @@ return {
   --    require("plugins.neotest")
   --  end,
   --},
-  {
-    "andythigpen/nvim-coverage",
-    dependencies = "nvim-lua/plenary.nvim",
-    cmd = {
-      "Coverage",
-      "CoverageSummary",
-      "CoverageLoad",
-      "CoverageShow",
-      "CoverageHide",
-      "CoverageToggle",
-      "CoverageClear",
-    },
-    config = function()
-      require("coverage").setup()
-    end,
-  },
+  --{
+  --  "andythigpen/nvim-coverage",
+  --  dependencies = "nvim-lua/plenary.nvim",
+  --  cmd = {
+  --    "Coverage",
+  --    "CoverageSummary",
+  --    "CoverageLoad",
+  --    "CoverageShow",
+  --    "CoverageHide",
+  --    "CoverageToggle",
+  --    "CoverageClear",
+  --  },
+  --  config = function()
+  --    require("coverage").setup()
+  --  end,
+  --},
 
   -- DAP TODO
   --{
