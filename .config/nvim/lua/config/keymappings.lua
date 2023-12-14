@@ -37,9 +37,9 @@ end
 keymap("n", "<CR>", ":noh<CR><CR>", silent)
 
 -- Find word/file across project
-keymap("n", "<Leader>pf",
-  "<CMD>lua require('plugins.telescope').project_files({ default_text = vim.fn.expand('<cword>'), initial_mode = 'normal' })<CR>")
-keymap("n", "<Leader>pw", "<CMD>lua require('telescope.builtin').grep_string({ initial_mode = 'normal' })<CR>")
+keymap("n", "<Leader>tf", "<CMD>Telescope find_files<CR>")
+keymap("n", "<Leader>ts", "<CMD>Telescope grep_string<CR>")
+keymap("n", "<Leader>tt", "<CMD>Telescope<CR>")
 
 -- LSP
 -- keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", silent) -- Replaced with Glance plugin
