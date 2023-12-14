@@ -18,15 +18,6 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
-local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
-    return false
-  end
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
-end
-
-
 local function deprioritize_snippet(entry1, entry2)
   if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
     return false
@@ -62,30 +53,6 @@ local function limit_lsp_types(entry, ctx)
   end
 
   return true
-end
-
---- Get completion context, i.e., auto-import/target module location.
---- Depending on the LSP this information is stored in different parts of the
---- lsp.CompletionItem payload. The process to find them is very manual: log the payloads
---- And see where useful information is stored.
----@param completion lsp.CompletionItem
----@param source cmp.Source
----@see Astronvim, because i just discovered they're already doing this thing, too
---  https://github.com/AstroNvim/AstroNvim
-local function get_lsp_completion_context(completion, source)
-  local ok, source_name = pcall(function()
-    return source.source.client.config.name
-  end)
-  if not ok then
-    return nil
-  end
-  if source_name == "tsserver" or source_name == "typescript-tools" then
-    return completion.detail
-  elseif source_name == "pyright" then
-    if completion.labelDetails ~= nil then
-      return completion.labelDetails.description
-    end
-  end
 end
 
 -- ╭──────────────────────────────────────────────────────────╮
@@ -169,19 +136,6 @@ cmp.setup({
       item_with_kind.menu = vim.trim(item_with_kind.menu or "")
       item_with_kind.abbr = string.sub(item_with_kind.abbr, 1, item_with_kind.maxwidth)
 
-      local completion_context = get_lsp_completion_context(entry.completion_item, entry.source)
-      if completion_context ~= nil and completion_context ~= "" then
-        item_with_kind.menu = item_with_kind.menu .. [[ -> ]] .. completion_context
-      end
-
-      if string.find(vim_item.kind, "Color") then
-        -- Override for plugin purposes
-        vim_item.kind = "Color"
-        local tailwind_item = require("cmp-tailwind-colors").format(entry, vim_item)
-        item_with_kind.menu = lspkind.symbolic("Color", { with_text = false }) .. " Color"
-        item_with_kind.kind = " " .. tailwind_item.kind
-      end
-
       return item_with_kind
     end,
   },
@@ -207,7 +161,6 @@ cmp.setup({
       max_item_count = 10,
       option = buffer_option,
     },
-    { name = "nvim_lua", priority = 5 },
     { name = "path",     priority = 4 },
     { name = "calc",     priority = 3 },
   },
@@ -237,7 +190,7 @@ cmp.setup({
     }),
   },
   experimental = {
-    ghost_text = true,
+    ghost_text = false,
   },
   performance = {
     max_view_entries = 100,
