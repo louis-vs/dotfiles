@@ -66,12 +66,9 @@ require("nvim-tree").setup({
 		custom = { '^.DS_Store$' },
 	},
 	view = {
-		-- width of the window, can be either a number (columns) or a string in `%`
-		width = 30,
-		-- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
+		width = {}, -- table means dynamically resize
 		side = "left",
-		number = false,
-		relativenumber = false,
+    preserve_window_proportions = true,
 	},
 })
 

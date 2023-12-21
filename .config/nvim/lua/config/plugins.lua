@@ -190,17 +190,17 @@ return {
   --  config = true,
   --},
   -- replacement for VSCode peek to see definitions etc. at a glance
-  --{
-  --  "dnlhc/glance.nvim",
-  --  config = true,
-  --  cmd = { "Glance" },
-  --  keys = {
-  --    { "gd", "<cmd>Glance definitions<CR>",      desc = "LSP Definition" },
-  --    { "gr", "<cmd>Glance references<CR>",       desc = "LSP References" },
-  --    { "gm", "<cmd>Glance implementations<CR>",  desc = "LSP Implementations" },
-  --    { "gy", "<cmd>Glance type_definitions<CR>", desc = "LSP Type Definitions" },
-  --  },
-  --},
+  {
+    "dnlhc/glance.nvim",
+    config = true,
+    cmd = { "Glance" },
+    keys = {
+      { "gd", "<cmd>Glance definitions<CR>",      desc = "LSP Definition" },
+      { "gr", "<cmd>Glance references<CR>",       desc = "LSP References" },
+      { "gm", "<cmd>Glance implementations<CR>",  desc = "LSP Implementations" },
+      { "gy", "<cmd>Glance type_definitions<CR>", desc = "LSP Type Definitions" },
+    },
+  },
   -- auto refactor when you move things in nvim-tree
   {
     "antosha417/nvim-lsp-file-operations",
@@ -320,9 +320,7 @@ return {
     "echasnovski/mini.bufremove",
     version = "*",
     config = function()
-      require("mini.bufremove").setup({
-        silent = true,
-      })
+      require("mini.bufremove").setup()
     end,
   },
   -- TODO notifications might be nice
@@ -459,7 +457,7 @@ return {
 
   -- Git
   -- togglable git highlighting and virtual text
-  --{
+  {
     "lewis6991/gitsigns.nvim",
     event = "BufRead",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -569,4 +567,8 @@ return {
           vim.g.csv_bind_B = 1
       end,
   },
+  {
+    'obreitwi/vim-sort-folds',
+    cmd = 'SortFolds',
+  }
 }
