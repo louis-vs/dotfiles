@@ -32,13 +32,9 @@ fi
 
 # ruby
 #export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.0)" # see https://github.com/rbenv/homebrew-tap/pull/2
-export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
-export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
-export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
-export GEM_HOME="$XDG_DATA_HOME/gem"
-export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
-export SOLARGRAPH_CACHE="$XDG_CACHE_HOME/solargraph"
-export SOLARGRAPH_GLOBAL_CONFIG="$XDG_CONFIG_HOME/solargraph/config.yml"
+#export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
+#export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
+#export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 
 # use z to easily cd to directories
 export ZSHZ_DATA="$XDG_DATA_HOME/z"
