@@ -22,7 +22,10 @@ return {
         vim.cmd("colorscheme kanagawa")
     end,
   },
+  -- common dependency
   { "nvim-lua/plenary.nvim" },
+
+  -- cool icons
   {
     "nvim-tree/nvim-web-devicons",
     config = function()
@@ -44,10 +47,22 @@ return {
       "RRethy/nvim-treesitter-textsubjects",
     },
   },
+
+  -- rainbows!
   {
-      "hiphish/rainbow-delimiters.nvim",
-      main = "rainbow-delimiters.setup",
-      config = true,
+    "hiphish/rainbow-delimiters.nvim",
+    main = "rainbow-delimiters.setup",
+    opts = {
+      highlight = {
+        --'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+      },
+    },
   },
 
   -- Navigating (Telescope/Tree/Refactor)
@@ -61,9 +76,11 @@ return {
       { "nvim-lua/popup.nvim" },
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      --{ "cljoly/telescope-repo.nvim" },
+      { "cljoly/telescope-repo.nvim" },
     },
   },
+
+  -- file browsing
   {
     "nvim-tree/nvim-tree.lua",
     cmd = {
@@ -80,31 +97,13 @@ return {
       require("plugins.tree")
     end,
   },
+
   -- keep cursor in same place when using >, <, = and maintain selection
   {
     "gbprod/stay-in-place.nvim",
     lazy = false,
-    config = true, -- run require("stay-in-place").setup()
+    config = true,
   },
-  -- automate useful refactoring patterns
-  --{
-  --  "ThePrimeagen/refactoring.nvim",
-  --  dependencies = {
-  --    "nvim-lua/plenary.nvim",
-  --    "nvim-treesitter/nvim-treesitter",
-  --  },
-  --  cmd = "Refactor",
-  --  keys = {
-  --    { "<leader>re", ":Refactor extract ",              mode = "x",          desc = "Extract function" },
-  --    { "<leader>rf", ":Refactor extract_to_file ",      mode = "x",          desc = "Extract function to file" },
-  --    { "<leader>rv", ":Refactor extract_var ",          mode = "x",          desc = "Extract variable" },
-  --    { "<leader>ri", ":Refactor inline_var",            mode = { "x", "n" }, desc = "Inline variable" },
-  --    { "<leader>rI", ":Refactor inline_func",           mode = "n",          desc = "Inline function" },
-  --    { "<leader>rb", ":Refactor extract_block",         mode = "n",          desc = "Extract block" },
-  --    { "<leader>rf", ":Refactor extract_block_to_file", mode = "n",          desc = "Extract block to file" },
-  --  },
-  --  config = true
-  --},
 
   -- LSP Base
   {
@@ -115,13 +114,12 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
     },
-    servers = nil,
   },
   {
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = {
-      { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" },
+      { "<leader>/m", "<cmd>Mason<cr>", desc = "Mason" },
     },
   },
 
@@ -133,12 +131,12 @@ return {
       require("plugins.cmp")
     end,
     dependencies = {
+      "onsails/lspkind-nvim",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-calc", -- math calculation
       -- snippets
       "saadparwaiz1/cmp_luasnip",
       {
@@ -146,7 +144,7 @@ return {
           -- follow latest release.
           version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
           -- install jsregexp (optional!).
-          build = "make install_jsregexp",
+          --build = "make install_jsregexp", -- this is bugged until my PR gets merged
           dependencies = "rafamadriz/friendly-snippets",
       },
       {
@@ -161,7 +159,7 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    ft = { "typescript", "typescriptreact" },
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "neovim/nvim-lspconfig",
@@ -170,25 +168,6 @@ return {
       require("plugins.typescript-tools")
     end,
   },
-  { "onsails/lspkind-nvim" },
-  -- automatically convert JS string to template string when ${} added
-  --{
-  --  "axelvc/template-string.nvim",
-  --  event = "InsertEnter",
-  --  ft = {
-  --    "javascript",
-  --    "typescript",
-  --    "javascriptreact",
-  --    "typescriptreact",
-  --  },
-  --  config = true, -- run require("template-string").setup()
-  --},
-  -- typescript type checking using tsc
-  --{
-  --  "dmmulroy/tsc.nvim",
-  --  cmd = { "TSC" },
-  --  config = true,
-  --},
   -- replacement for VSCode peek to see definitions etc. at a glance
   {
     "dnlhc/glance.nvim",
@@ -215,37 +194,12 @@ return {
   },
 
   -- General
-  -- quick switches (e.g. true->false) with :Switch
-  --{ "AndrewRadev/switch.vim", lazy = false },
-  -- auto split / join arrays etc.
-  --{
-  --  "Wansmer/treesj",
-  --  lazy = true,
-  --  cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-  --  keys = {
-  --    { "gJ", "<cmd>TSJToggle<CR>", desc = "Toggle Split/Join" },
-  --  },
-  --  config = function()
-  --    require("treesj").setup({
-  --      use_default_keymaps = false,
-  --    })
-  --  end,
-  --},
   -- auto commenting
   --{
   --  "numToStr/Comment.nvim",
   --  lazy = false,
   --  dependencies = "JoosepAlviste/nvim-ts-context-commentstring",
   --  config = true,
-  --},
-  -- create fancy comments for e.g. a config file
-  --{
-  --  "LudoPinelli/comment-box.nvim",
-  --  lazy = false,
-  --  keys = {
-  --    { "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", desc = "comment box" },
-  --    { "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", mode = "v",          desc = "comment box" },
-  --  }
   --},
   -- TODO better terminal
   --{
@@ -260,11 +214,11 @@ return {
   --  }
   --},
   -- make '.' behave better with plugins
-  --{ "tpope/vim-repeat",           lazy = false },
+  { "tpope/vim-repeat",           lazy = false },
   -- make <C-A> <C-X> work on dates
   { "tpope/vim-speeddating",      lazy = false },
   -- easily make markdown tables
-  { "dhruvasagar/vim-table-mode", ft = { "markdown" } },
+  --{ "dhruvasagar/vim-table-mode", ft = { "markdown" } },
   {
     "folke/todo-comments.nvim",
     lazy = false,
@@ -281,103 +235,70 @@ return {
   --    require("plugins.zen")
   --  end,
   --},
-  -- better jumps
-  -- TODO look into this one
-  --{
-  --  "folke/flash.nvim",
-  --  event = "VeryLazy",
-  --  opts = {
-  --    char = {
-  --      keys = { "f", "F", "t", "T" },
-  --    }
-  --  },
-  --  keys = {
-  --    {
-  --      "s",
-  --      mode = { "n", "x", "o" },
-  --      function()
-  --        require("flash").jump()
-  --      end,
-  --    },
-  --  },
-  --},
-  -- TODO find new keybindings!
-  --{
-  --  "folke/which-key.nvim",
-  --  event = "VeryLazy",
-  --  config = true,
-  --},
-  -- better statusline TODO
-  --{
-  --  "ecosse3/galaxyline.nvim",
-  --  config = function()
-  --    require("plugins.galaxyline")
-  --  end,
-  --  event = "VeryLazy",
-  --},
+  -- find new keybindings!
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+  -- better statusline
+  {
+    'nvim-lualine/lualine.nvim',
+    lazy = false,
+    config = true,
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
   -- don't fuck up window layout after bdel etc.
   {
     "echasnovski/mini.bufremove",
-    version = "*",
+    version = "*", -- change to false for latest
     config = function()
-      require("mini.bufremove").setup()
+      require("mini.bufremove").setup {
+        set_vim_settings = false,
+      }
+    end,
+    keys = {
+      { "<Leader>bd", "<cmd>lua MiniBufremove.delete<CR>", desc = "unshow and delete current buffer" },
+    },
+  },
+  -- notifications
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup{ }
+    end,
+    init = function()
+      local banned_messages = {
+        "No information available",
+        "LSP[tsserver] Inlay Hints request failed. Requires TypeScript 4.4+.",
+        "LSP[tsserver] Inlay Hints request failed. File not opened in the editor.",
+      }
+      vim.notify = function(msg, ...)
+        for _, banned in ipairs(banned_messages) do
+          if msg == banned then
+            return
+          end
+        end
+        return require("notify")(msg, ...)
+      end
     end,
   },
-  -- TODO notifications might be nice
-  --{
-  --  "rcarriga/nvim-notify",
-  --  config = function()
-  --    require("notify").setup({
-  --      background_colour = "#000000",
-  --    })
-  --  end,
-  --  init = function()
-  --    local banned_messages = {
-  --      "No information available",
-  --      "LSP[tsserver] Inlay Hints request failed. Requires TypeScript 4.4+.",
-  --      "LSP[tsserver] Inlay Hints request failed. File not opened in the editor.",
-  --    }
-  --    vim.notify = function(msg, ...)
-  --      for _, banned in ipairs(banned_messages) do
-  --        if msg == banned then
-  --          return
-  --        end
-  --      end
-  --      return require("notify")(msg, ...)
-  --    end
-  --  end,
-  --},
-  -- nice NPM/Yarn shortcuts
-  --{
-  --  "vuki656/package-info.nvim",
-  --  event = "BufEnter package.json",
-  --  config = true,
-  --},
-  -- TODO look into this one
-  --{
-  --  "airblade/vim-rooter",
-  --  event = "VeryLazy",
-  --  config = function()
-  --    vim.g.rooter_patterns = EcoVim.plugins.rooter.patterns
-  --    vim.g.rooter_silent_chdir = 1
-  --    vim.g.rooter_resolve_links = 1
-  --  end,
-  --},
-  -- TODO a wrapper around neovim :mksession
-  --{
-  --  "Shatur/neovim-session-manager",
-  --  lazy = false,
-  --  config = function()
-  --    require("plugins.session-manager")
-  --  end,
-  --  keys = {
-  --    { "<Leader>/sc", "<cmd>SessionManager load_session<CR>",             desc = "choose session" },
-  --    { "<Leader>/sr", "<cmd>SessionManager delete_session<CR>",           desc = "remove session" },
-  --    { "<Leader>/sd", "<cmd>SessionManager load_current_dir_session<CR>", desc = "load current dir session" },
-  --    { "<Leader>/sl", "<cmd>SessionManager load_last_session<CR>",        desc = "load last session" },
-  --    { "<Leader>/ss", "<cmd>SessionManager save_current_session<CR>",     desc = "save session" },
-  --  }
-  --},
+  -- a wrapper around neovim :mksession
+  -- call with <Leader>/s_ commands
+  {
+    "Shatur/neovim-session-manager",
+    lazy = false,
+    config = function()
+      require("plugins.session-manager")
+    end,
+    keys = {
+      { "<Leader>/sc", "<cmd>SessionManager load_session<CR>",             desc = "choose session" },
+      { "<Leader>/sr", "<cmd>SessionManager delete_session<CR>",           desc = "remove session" },
+      { "<Leader>/sd", "<cmd>SessionManager load_current_dir_session<CR>", desc = "load current dir session" },
+      { "<Leader>/sl", "<cmd>SessionManager load_last_session<CR>",        desc = "load last session" },
+      { "<Leader>/ss", "<cmd>SessionManager save_current_session<CR>",     desc = "save session" },
+    },
+  },
   -- lua version of Tim Pope's classic plugin
   {
     "kylechui/nvim-surround",
@@ -385,33 +306,27 @@ return {
     event = "VeryLazy",
     config = true,
   },
-  -- dim inactive windows (TODO check if I actually want this)
-  --{
-  --  "sunjon/shade.nvim",
-  --  config = function()
-  --    require("shade").setup()
-  --    require("shade").toggle()
-  --  end,
-  --},
   -- fancy folds (note that setup is called manually in lsp.config)
   {
     "kevinhwang91/nvim-ufo",
-    dependencies = "kevinhwang91/promise-async",
-    config = function()
-      vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-      vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-      vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-    end,
+    dependencies = { "kevinhwang91/promise-async" },
+    config = false,
+    keys = {
+      { "zR", function() require("ufo").openAllFolds() end, desc = "open all folds" },
+      { "zM", function() require("ufo").closeAllFolds() end, desc = "close all folds" },
+      { "zr", function() require("ufo").openAllFoldsExceptKinds() end, desc = "open all folds except kinds" },
+      { "zm", function() require("ufo").closeFoldsWith() end, desc = "close count folds" },
+    },
   },
   -- indent guides
-  --{
-  --  "lukas-reineke/indent-blankline.nvim",
-  --  event = "BufReadPre",
-  --  main = "ibl",
-  --  config = function()
-  --    require("plugins.indent")
-  --  end,
-  --},
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPre",
+    main = "ibl",
+    config = function()
+      require("plugins.indent")
+    end,
+  },
 
   -- Snippets & Language & Syntax
   -- auto close brackets with TS
@@ -442,17 +357,6 @@ return {
   --  },
   --  dependencies = { "nvim-treesitter/nvim-treesitter" },
   --  ft = { "html", "svelte", "astro", "vue", "typescriptreact" },
-  --},
-  -- shortcut to show actual CSS generated by tailwind
-  --{
-  --  "MaximilianLloyd/tw-values.nvim",
-  --  keys = {
-  --    { "<Leader>cv", "<CMD>TWValues<CR>", desc = "Tailwind CSS values" },
-  --  },
-  --  opts = {
-  --    border = "rounded", -- Valid window border style,
-  --    show_unknown_classes = true                   -- Shows the unknown classes popup
-  --  }
   --},
 
   -- Git
@@ -560,7 +464,6 @@ return {
       end,
   },
   { 'epwalsh/obsidian.nvim' },
-  { 'nvim-lualine/lualine.nvim', lazy = false, config = true },
   {
       'chrisbra/csv.vim',
       config = function ()
@@ -570,5 +473,10 @@ return {
   {
     'obreitwi/vim-sort-folds',
     cmd = 'SortFolds',
-  }
+  },
+  {
+    'stevearc/dressing.nvim',
+    opts = {},
+    event = "VeryLazy",
+  },
 }

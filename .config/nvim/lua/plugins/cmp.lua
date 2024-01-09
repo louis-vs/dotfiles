@@ -162,7 +162,6 @@ cmp.setup({
       option = buffer_option,
     },
     { name = "path",     priority = 4 },
-    { name = "calc",     priority = 3 },
   },
   sorting = {
     priority_weight = 2,
