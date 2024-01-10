@@ -1,0 +1,28 @@
+import = ["/Users/louvan/.config/alacritty/kanagawa_wave.toml"]
+
+[cursor]
+vi_mode_style = "Block"
+
+[cursor.style]
+blinking = "Off"
+shape = "Beam"
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "FiraCode Nerd Font Mono"
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 100000
+
+[window]
+dynamic_title = true
+opacity = 0.999
+
+[window.dimensions]
+columns = 152
+lines = 60
