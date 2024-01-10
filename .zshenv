@@ -10,6 +10,7 @@ export XDG_CONFIG_DIRS="/Library/Application Support:/Library/Preferences"
 
 # path
 export PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
