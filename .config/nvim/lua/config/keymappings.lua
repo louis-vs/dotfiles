@@ -13,7 +13,7 @@ keymap("n", "<C-k>", "<C-w>k", silent)
 keymap("n", "<C-l>", "<C-w>l", silent)
 
 -- Toggle wrap
-keymap("n", "<Leader>w", ":set wrap!<CR>:set linebreak!<CR>", silent)
+keymap("n", "<Leader>w", ":set wrap!<CR>:set linebreak!<CR>", silent) -- TODO fix this to also use gj and gk instead of j and k
 
 
 -- Don't yank on delete char
@@ -39,7 +39,12 @@ keymap("n", "<CR>", ":noh<CR><CR>", silent)
 -- Find word/file across project
 keymap("n", "<Leader>tf", "<CMD>Telescope find_files<CR>")
 keymap("n", "<Leader>ts", "<CMD>Telescope grep_string<CR>")
+keymap("n", "<Leader>tg", "<CMD>Telescope live_grep<CR>")
 keymap("n", "<Leader>tt", "<CMD>Telescope<CR>")
+
+-- Buffer shortcuts
+keymap("n", "<Leader>bb", "<CMD>b#<CR>")
+
 
 -- LSP
 -- keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", silent) -- Replaced with Glance plugin
