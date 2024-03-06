@@ -76,3 +76,7 @@ keymap("n", "K", function()
 		vim.lsp.buf.hover()
 	end
 end)
+
+-- Copilot
+keymap("n", "<leader>cp", "<cmd>Copilot panel<CR>", silent)
+keymap("n", "<leader>cs", "<cmd>Copilot suggestion<CR>", silent)

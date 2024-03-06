@@ -68,6 +68,7 @@ local source_mapping = {
   path = "󰉖",
   treesitter = "󰙅",
   zsh = "ZSH",
+  Copilot = "",
 }
 
 local buffer_option = {
@@ -147,6 +148,7 @@ cmp.setup({
       -- Limits LSP results to specific types based on line context (Fields, Methods, Variables)
       entry_filter = limit_lsp_types,
     },
+    --{ name = "copilot", priority = 11, max_item_count = 3 },
     { name = "npm",         priority = 9 },
     { name = "git",         priority = 7 },
     {

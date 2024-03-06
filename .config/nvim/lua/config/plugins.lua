@@ -137,6 +137,7 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
+      "zbirenbaum/copilot-cmp",
       -- snippets
       "saadparwaiz1/cmp_luasnip",
       {
@@ -152,6 +153,12 @@ return {
         config = true,
       },
       "petertriho/cmp-git",
+      {
+        "zbirenbaum/copilot-cmp",
+        config = function()
+          require("copilot_cmp").setup()
+        end,
+      },
     },
   },
 
@@ -168,6 +175,7 @@ return {
       require("plugins.typescript-tools")
     end,
   },
+
   -- replacement for VSCode peek to see definitions etc. at a glance
   {
     "dnlhc/glance.nvim",
@@ -180,6 +188,7 @@ return {
       { "gy", "<cmd>Glance type_definitions<CR>", desc = "LSP Type Definitions" },
     },
   },
+
   -- auto refactor when you move things in nvim-tree
   {
     "antosha417/nvim-lsp-file-operations",
@@ -478,5 +487,13 @@ return {
     'stevearc/dressing.nvim',
     opts = {},
     event = "VeryLazy",
+  },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("plugins.copilot")
+    end,
   },
 }
