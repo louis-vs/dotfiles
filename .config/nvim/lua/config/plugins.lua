@@ -5,21 +5,22 @@ return {
     lazy = false,
     priority = 1000,
     config = function ()
-        require('kanagawa').setup {
-            overrides = function (colors)
-                return {
-                    RainbowDelimeterRed = { fg = colors.palette.autumnRed },
-                    RainbowDelimeterYellow = { fg = colors.palette.carpYellow },
-                    RainbowDelimeterBlue = { fg = colors.palette.dragonBlue },
-                    RainbowDelimeterOrange = { fg = colors.palette.surimiOrange },
-                    RainbowDelimeterGreen = { fg = colors.palette.springGreen },
-                    RainbowDelimeterViolet = { fg = colors.palette.oniViolet },
-                    RainbowDelimeterCyan = { fg = colors.palette.waveAqua1 },
-                }
-            end,
-        }
+      require('kanagawa').setup {
+        overrides = function (colors)
+          return {
+            RainbowDelimeterRed = { fg = colors.palette.autumnRed },
+            RainbowDelimeterYellow = { fg = colors.palette.carpYellow },
+            RainbowDelimeterBlue = { fg = colors.palette.dragonBlue },
+            RainbowDelimeterOrange = { fg = colors.palette.surimiOrange },
+            RainbowDelimeterGreen = { fg = colors.palette.springGreen },
+            RainbowDelimeterViolet = { fg = colors.palette.oniViolet },
+            RainbowDelimeterCyan = { fg = colors.palette.waveAqua1 },
+            EndOfBuffer = { link = 'Whitespace' },
+          }
+        end,
+      }
 
-        vim.cmd("colorscheme kanagawa")
+      vim.cmd("colorscheme kanagawa")
     end,
   },
   -- common dependency
@@ -469,7 +470,7 @@ return {
       'nanozuki/tabby.nvim',
       lazy = false,
       config = function ()
-          require('tabby.tabline').use_preset('active_wins_at_tail', { })
+          require('tabby.tabline').use_preset('tab_with_top_win', { })
       end,
   },
   { 'epwalsh/obsidian.nvim' },
