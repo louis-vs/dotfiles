@@ -77,6 +77,9 @@ keymap("n", "K", function()
 	end
 end)
 
+keymap("n", "<leader>oi", "<cmd>TSToolsOrganizeImports<CR>")
+keymap("n", "<leader>ai", "<cmd>TSToolsAddMissingImports<CR>")
+
 -- Copilot
-keymap("n", "<leader>cp", "<cmd>Copilot panel<CR>", silent)
-keymap("n", "<leader>cs", "<cmd>Copilot suggestion<CR>", silent)
+keymap("n", "<leader>cp", "<cmd>Copilot panel<CR>")
+keymap("n", "<leader>cs", "<cmd>Copilot suggestion<CR>")
