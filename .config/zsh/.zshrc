@@ -98,3 +98,6 @@ fi
 
 # load aliases
 [ -f "$ZDOTDIR/.aliasrc" ] && source "$ZDOTDIR/.aliasrc"
+
+# fuck
+eval $(thefuck --alias fuck)

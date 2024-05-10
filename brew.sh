@@ -105,9 +105,12 @@ brew install glow
 brew install lua-language-server
 
 
-# ocr enginge
+# ocr engine
 brew install tesseract
 brew install tesseract-lang
+
+# fuck
+brew install thefuck
 
 ##############################################
 # CASKS
