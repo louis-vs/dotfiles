@@ -29,8 +29,10 @@ lines = 60
 
 [keyboard]
 bindings = [
-    { key = "PageUp",                     action = "ScrollLineUp"},
-    { key = "PageUp",   mods = "Shift",   action = "ScrollHalfPageUp"},
-    { key = "PageDown",                   action = "ScrollLineDown"},
-    { key = "PageDown", mods = "Shift",   action = "ScrollHalfPageDown"},
+    { key = "PageUp",                           action = "ScrollLineUp"},
+    { key = "PageUp",   mods = "Shift",         action = "ScrollHalfPageUp"},
+    { key = "PageDown",                         action = "ScrollLineDown"},
+    { key = "PageDown", mods = "Shift",         action = "ScrollHalfPageDown"},
+    { key = "Tab",      mods = "Control",       action = "SelectNextTab"},
+    { key = "Tab",      mods = "Control|Shift", action = "SelectPreviousTab"},
 ]
