@@ -26,3 +26,11 @@ opacity = 0.999
 [window.dimensions]
 columns = 152
 lines = 60
+
+[keyboard]
+bindings = [
+    { key = "PageUp",                     action = "ScrollLineUp"},
+    { key = "PageUp",   mods = "Shift",   action = "ScrollHalfPageUp"},
+    { key = "PageDown",                   action = "ScrollLineDown"},
+    { key = "PageDown", mods = "Shift",   action = "ScrollHalfPageDown"},
+]
