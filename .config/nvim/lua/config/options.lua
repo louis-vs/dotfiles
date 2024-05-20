@@ -62,7 +62,7 @@ local globals = {
 
 --vim.opt.shortmess:append('c');
 --vim.opt.formatoptions:remove('c');
---vim.opt.formatoptions:remove('r');
+vim.opt.formatoptions:append('r');
 vim.opt.formatoptions:remove('o');
 -- remove statusline clutter
 --vim.opt.fillchars:append('stl: ');
