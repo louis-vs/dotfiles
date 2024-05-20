@@ -112,6 +112,9 @@ brew install tesseract-lang
 # fuck
 brew install thefuck
 
+# stow (for dotfiles)
+brew install stow
+
 ##############################################
 # CASKS
 ##############################################
