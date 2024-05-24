@@ -1,22 +1,39 @@
 {
-  "$schema" : "https:\/\/app.linearmouse.org\/schema\/0.7.3",
   "schemes" : [
     {
-      "pointer" : {
-        "acceleration" : 0.6875,
-        "disableAcceleration" : true
+      "scrolling" : {
+        "distance" : 3
       },
       "if" : {
         "device" : {
+          "category" : "mouse",
           "productName" : "MM711 Gaming Mouse",
           "productID" : "0x101",
-          "category" : "mouse",
           "vendorID" : "0x2516"
         }
       },
+      "pointer" : {
+        "acceleration" : 0.6875,
+        "disableAcceleration" : true
+      }
+    },
+    {
+      "if" : {
+        "app" : "com.jetbrains.toolbox",
+        "device" : {
+          "category" : "trackpad",
+          "productName" : "Apple Internal Keyboard \/ Trackpad",
+          "productID" : "0x340",
+          "vendorID" : "0x5ac",
+          "serialNumber" : "FM7045201R6HYYKBP+TVN"
+        }
+      },
       "scrolling" : {
-        "distance" : 3
+        "acceleration" : {
+          "vertical" : 1
+        }
       }
     }
-  ]
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5"
 }
