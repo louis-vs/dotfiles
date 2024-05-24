@@ -47,7 +47,7 @@ export GPG_TTY=$TTY
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 
 # nvm and node
-export NVM_DIR="$XDG_DATA_HOME/nvm"
+export NVM_DIR="$HOME/Library/nvm"
 export NVM_COMPLETION=true
 export NVM_AUTO_USE=true
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
@@ -94,7 +94,7 @@ fi
 [[ ! -f "$ZDOTDIR/.p10k.zsh" ]] || source "$ZDOTDIR/.p10k.zsh"
 
 # fuzzyfinder
-[ -f "$ZDOTDIR/.fzf.zsh" ] && source "$ZDOTDIR/.fzf.zsh"
+#[ -f "$ZDOTDIR/.fzf.zsh" ] && source "$ZDOTDIR/.fzf.zsh"
 
 # load aliases
 [ -f "$ZDOTDIR/.aliasrc" ] && source "$ZDOTDIR/.aliasrc"
