@@ -11,8 +11,8 @@
 
 [user]
     name=Louis Van Steene
-    email=louis@lvs.me.uk
-    signingKey=1F718C878A87C7F59396BD1420ACAD2AC9F1949D
+	email = Louis.VanSteene@softwire.com
+	signingkey = 516914B2A9C370C2
 [init]
 	defaultBranch = master
 [diff]
