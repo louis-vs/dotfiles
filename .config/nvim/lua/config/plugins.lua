@@ -46,6 +46,8 @@ return {
       "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "RRethy/nvim-treesitter-textsubjects",
+      "windwp/nvim-ts-autotag",
+      "RRethy/nvim-treesitter-endwise",
     },
   },
 
@@ -347,8 +349,6 @@ return {
       require("plugins.autopairs")
     end,
   },
-  { 'windwp/nvim-ts-autotag' },
-  { 'RRethy/nvim-treesitter-endwise' },
   -- fast highlighting
   {
     "NvChad/nvim-colorizer.lua",
