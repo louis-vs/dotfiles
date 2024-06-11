@@ -179,6 +179,17 @@ return {
     end,
   },
 
+  -- Formatting
+  {
+    'stevearc/conform.nvim',
+    config = function()
+      require("plugins.conform")
+    end,
+    keys = {
+      { "<leader>cf", "<cmd>lua require'conform'.format()<CR>", desc = "Format buffer" }
+    }
+  },
+
   -- replacement for VSCode peek to see definitions etc. at a glance
   {
     "dnlhc/glance.nvim",
