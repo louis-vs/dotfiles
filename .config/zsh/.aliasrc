@@ -27,7 +27,7 @@ alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/yarnrc"'
 
 # manage dotfiles using git
 alias \
-    lgdf="lazygit --git-dir=\"$XDG_CONFIG_HOME/dotfiles\" --work-tree=\"$HOME\"" \
-    gitdf="git --git-dir=\"$XDG_CONFIG_HOME/dotfiles\" --work-tree=\"$HOME\""
+    lgdf="lazygit --git-dir=\"$HOME/dotfiles/.git/\" --work-tree=\"$HOME/dotfiles/\"" \
+    gitdf="git -C \"$HOME/dotfiles\""
 
 alias lg=lazygit
