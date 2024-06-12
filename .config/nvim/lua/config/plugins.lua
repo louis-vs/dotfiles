@@ -182,11 +182,18 @@ return {
   -- Formatting
   {
     'stevearc/conform.nvim',
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
     config = function()
       require("plugins.conform")
     end,
     keys = {
-      { "<leader>cf", "<cmd>lua require'conform'.format()<CR>", desc = "Format buffer" }
+      {
+        "<leader>cf",
+        function()
+          require'conform'.format({async = true})
+        end,
+        desc = "Format buffer" }
     }
   },
 
