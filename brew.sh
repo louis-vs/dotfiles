@@ -68,7 +68,9 @@ brew install mono
 
 # formatter for C family languages
 brew install clang-format
+
 brew install lua
+brew install luarocks
 brew install libevent
 
 # CMAKE
@@ -114,6 +116,11 @@ brew install thefuck
 
 # stow (for dotfiles)
 brew install stow
+
+# work
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+brew install azure-cli
 
 ##############################################
 # CASKS
