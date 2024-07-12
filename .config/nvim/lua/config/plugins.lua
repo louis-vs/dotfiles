@@ -386,6 +386,10 @@ return {
   --  dependencies = { "nvim-treesitter/nvim-treesitter" },
   --  ft = { "html", "svelte", "astro", "vue", "typescriptreact" },
   --},
+  {
+    "NMAC427/guess-indent.nvim",
+    config = true,
+  },
 
   -- Git
   -- togglable git highlighting and virtual text
