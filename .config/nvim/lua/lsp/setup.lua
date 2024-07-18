@@ -26,7 +26,6 @@ mason_lsp.setup({
     "jsonls",
     "lua_ls",
     "prismals",
-    "ruby_lsp",
     "emmet_ls",
   },
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
@@ -59,57 +58,69 @@ capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
-mason_lsp.setup_handlers {
-    -- The first entry (without a key) will be the default handler
-    -- and will be called for each installed server that doesn't have
-    -- a dedicated handler.
-    function (server_name) -- default handler (optional)
-        require("lspconfig")[server_name].setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-        }
-    end,
-    -- Next, you can provide a dedicated handler for specific servers.
-    ["clangd"] = function ()
-        require("lspconfig").clangd.setup {
-            on_attach = on_attach,
-            capabilitieUfoCursorFoldedLines = capabilities,
-            cmd = { 'clangd', '--enable-config' },
-        }
-    end,
-    ["lua_ls"] = function ()
-        require'lspconfig'.lua_ls.setup{
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-            settings = require("lsp.servers.lua_ls").settings,
-        }
-    end,
-    ["eslint"] = function ()
-        require'lspconfig'.eslint.setup {
-            capabilities = capabilities,
-            handlers = handlers,
-            on_attach = require("lsp.servers.eslint").on_attach,
-            settings = require("lsp.servers.eslint").settings,
-        }
-    end,
-    ["jsonls"] = function ()
-        require'lspconfig'.jsonls.setup {
-            capabilities = capabilities,
-            handlers = handlers,
-            on_attach = on_attach,
-            settings = require("lsp.servers.jsonls").settings,
-        }
-    end,
-    ["tsserver"] = function () end, -- leave config to typescript-tools
-}
+mason_lsp.setup_handlers({
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler.
+  function(server_name) -- default handler (optional)
+    require("lspconfig")[server_name].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      handlers = handlers,
+    })
+  end,
+  -- Next, you can provide a dedicated handler for specific servers.
+  ["clangd"] = function()
+    require("lspconfig").clangd.setup({
+      on_attach = on_attach,
+      capabilitieUfoCursorFoldedLines = capabilities,
+      cmd = { "clangd", "--enable-config" },
+    })
+  end,
+  ["lua_ls"] = function()
+    require("lspconfig").lua_ls.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      handlers = handlers,
+      settings = require("lsp.servers.lua_ls").settings,
+    })
+  end,
+  ["eslint"] = function()
+    require("lspconfig").eslint.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = require("lsp.servers.eslint").on_attach,
+      settings = require("lsp.servers.eslint").settings,
+    })
+  end,
+  ["jsonls"] = function()
+    require("lspconfig").jsonls.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = on_attach,
+      settings = require("lsp.servers.jsonls").settings,
+    })
+  end,
+  ["tsserver"] = function() end, -- leave config to typescript-tools
+  ["solargraph"] = function()
+    require("lspconfig").solargraph.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = on_attach,
+      settings = {
+        solargraph = {
+          diagnostics = false,
+        },
+      },
+    })
+  end,
+})
 
 -- ufo must be setup after lsp
 
 local function ufo_config_handler(virtText, lnum, endLnum, width, truncate)
   local newVirtText = {}
-  local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+  local suffix = (" 󰁂 %d "):format(endLnum - lnum)
   local sufWidth = vim.fn.strdisplaywidth(suffix)
   local targetWidth = width - sufWidth
   local curWidth = 0
@@ -126,19 +137,19 @@ local function ufo_config_handler(virtText, lnum, endLnum, width, truncate)
       chunkWidth = vim.fn.strdisplaywidth(chunkText)
       -- str width returned from truncate() may less than 2nd argument, need padding
       if curWidth + chunkWidth < targetWidth then
-        suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+        suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
       end
       break
     end
     curWidth = curWidth + chunkWidth
   end
 
-  table.insert(newVirtText, { suffix, 'MoreMsg' })
+  table.insert(newVirtText, { suffix, "MoreMsg" })
 
   return newVirtText
 end
 
-require("ufo").setup {
+require("ufo").setup({
   fold_virt_text_handler = ufo_config_handler,
   --close_fold_kinds = { "imports" },
-}
+})
