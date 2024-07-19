@@ -15,3 +15,5 @@
     signingKey=1F718C878A87C7F59396BD1420ACAD2AC9F1949D
 [init]
 	defaultBranch = master
+[diff]
+	tool = nvimdiff
