@@ -1,7 +1,12 @@
+local javascriptFormatters = { { "prettierd", "prettier", "eslint" } }
+
 require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
-    javascript = { { "prettierd", "prettier", "eslint" } },
+    javascript = javascriptFormatters,
+    typescript = javascriptFormatters,
+    javascriptreact = javascriptFormatters,
+    typescriptreact = javascriptFormatters,
     ruby = { "rubocop" },
     eruby = { "erb-format" }
   },
