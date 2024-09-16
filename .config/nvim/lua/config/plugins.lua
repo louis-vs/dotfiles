@@ -258,13 +258,13 @@ return {
     end,
   },
   -- TODO better nvim-specific version of Goyo
-  --{
-  --  "folke/zen-mode.nvim",
-  --  cmd = { "ZenMode" },
-  --  config = function()
-  --    require("plugins.zen")
-  --  end,
-  --},
+  {
+    "folke/zen-mode.nvim",
+    cmd = { "ZenMode" },
+    config = function()
+      require("plugins.zen")
+    end,
+  },
   -- find new keybindings!
   {
     "folke/which-key.nvim",
