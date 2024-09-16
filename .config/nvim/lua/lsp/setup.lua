@@ -19,7 +19,7 @@ mason_lsp.setup({
     "clangd",
     "bashls",
     "cssls",
-    "tsserver",
+    "ts_ls",
     "eslint",
     "graphql",
     "html",
@@ -101,7 +101,7 @@ mason_lsp.setup_handlers({
       settings = require("lsp.servers.jsonls").settings,
     })
   end,
-  ["tsserver"] = function() end, -- leave config to typescript-tools
+  ["ts_ls"] = function() end, -- leave config to typescript-tools
   ["solargraph"] = function()
     require("lspconfig").solargraph.setup({
       capabilities = capabilities,
