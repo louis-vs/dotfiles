@@ -1,5 +1,4 @@
 # installs EVERYTHING you need for a fully-fledged macos setup
-# (untested!)
 # (make sure you install homebrew itself first!)
 
 # casks
