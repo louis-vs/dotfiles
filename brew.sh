@@ -14,6 +14,8 @@ brew install alacritty
 # disable font smoothing (i.e. enable anti-aliasing?) to make font appear thinner
 defaults write -g AppleFontSmoothing -int 0
 
+brew install zellij
+
 # move to trash (bin) as a safe alternative to rm
 brew install trash
 
