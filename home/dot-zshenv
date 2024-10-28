@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # XDG mac equivalents based on https://github.com/adrg/xdg and https://github.com/folder/xdg
 export XDG_CONFIG_HOME="$HOME/.config"
 #export XDG_CONFIG_HOME="$HOME/Library/Preferences"
@@ -11,6 +13,7 @@ export XDG_CONFIG_DIRS="/Library/Application Support:/Library/Preferences"
 # path
 export PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
