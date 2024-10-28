@@ -4,11 +4,11 @@ antigen use oh-my-zsh
 
 # load plugins
 antigen bundles <<EOBUNDLES
-  agkozak/zsh-z
   zdharma-continuum/fast-syntax-highlighting
   zsh-users/zsh-autosuggestions@master
 EOBUNDLES
 #  lukechilds/zsh-nvm
+#  agkozak/zsh-z
 
 antigen theme romkatv/powerlevel10k
 

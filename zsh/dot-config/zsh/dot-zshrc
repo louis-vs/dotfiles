@@ -96,3 +96,6 @@ fi
 
 # fuck
 eval "$(thefuck --alias fuck)"
+
+# zoxide (better z)
+eval "$(zoxide init zsh)"
