@@ -1,9 +1,6 @@
 # installs EVERYTHING you need for a fully-fledged macos setup
 # (make sure you install homebrew itself first!)
 
-# casks
-brew tap homebrew/cask-fonts
-
 # wine-crossover
 brew tap gcenx/wine
 
@@ -126,8 +123,10 @@ brew install azure-cli
 ##############################################
 # CASKS
 ##############################################
+brew tap homebrew/cask-fonts
+brew install font-hack-nerd-font
+
 brew install alacritty
-brew install font-fira-code-nerd-font
 brew install homebrew/cask/wireshark
 brew install homebrew/cask/syncthing
 brew install obsidian
