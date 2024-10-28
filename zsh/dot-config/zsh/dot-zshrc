@@ -26,10 +26,11 @@ if [[ -e /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# use rbenv
-if whence rbenv &>/dev/null; then
-    export RBENV_ROOT="$HOME/Library/rbenv" # can't go in DATA_HOME because of space in folder name
-    eval "$(rbenv init - zsh)"
+# tool version management
+if type brew &>/dev/null; then
+    export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
+    export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
+    source "$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh"
 fi
 
 # ruby
@@ -47,14 +48,6 @@ export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 # set gpg to use the current TTY when asking for password
 export GPG_TTY=$TTY
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-
-# nvm and node
-export NVM_DIR="$XDG_DATA_HOME/nvm"
-export NVM_COMPLETION=true
-export NVM_AUTO_USE=true
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-
-[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"  # This loads nvm
 
 # make local libs available to compiler and executer
 export C_INCLUDE_PATH="/usr/local/include:$C_INCLUDE_PATH"
@@ -77,7 +70,7 @@ export TERMINFO_DIRS="$XDG_DATA_HOME/terminfo:/usr/share/terminfo"
 
 # load autocompletions from homebrew if installed
 if type brew &>/dev/null; then
-    FPATH="$(brew --prefix)/share/zsh-completions:$(brew --prefix)/share/zsh/site-functions:$FPATH"
+    FPATH="$HOMEBREW_PREFIX/share/zsh-completions:$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH"
 fi
 autoload -Uz compinit
 zstyle ':completion:*' menu select cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
@@ -88,7 +81,7 @@ _comp_options+=(globdots) # include hidden files
 # use antigen to install zsh plugins (this also loads oh-my-zsh)
 export ADOTDIR="$XDG_CACHE_HOME/antigen" # ideally this would be data but antigen doesn't support spaces in paths
 if type brew &>/dev/null; then
-    source "$(brew --prefix)/share/antigen/antigen.zsh"
+    source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"
     antigen init "$ZDOTDIR/.antigenrc"
 fi
 
@@ -102,4 +95,4 @@ fi
 [ -f "$ZDOTDIR/.aliasrc" ] && source "$ZDOTDIR/.aliasrc"
 
 # fuck
-eval $(thefuck --alias fuck)
+eval "$(thefuck --alias fuck)"

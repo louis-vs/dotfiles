@@ -4,9 +4,6 @@
 # wine-crossover
 brew tap gcenx/wine
 
-# contains openssl@1.0, needed to install certain (old) versions of ruby
-brew tap rbenv/tap
-
 brew install alacritty
 # disable font smoothing (i.e. enable anti-aliasing?) to make font appear thinner
 defaults write -g AppleFontSmoothing -int 0
@@ -21,25 +18,18 @@ brew install antigen
 # some default completions for zsh
 brew install zsh-completions
 
-# ruby version manager
-brew install rbenv
+# contains openssl@1.0, needed to install certain (old) versions of ruby
+brew tap rbenv/tap
 # from rbenv/tap
 brew install openssl@1.0
 
-# python version manager
-brew install virtualenv
-# system python (is this needed?)
-brew install python@3.11
-
-# Node.js version manager
-brew install nvm
-# system node (is this needed?)
-brew install node
+# tool version management
+brew install asdf
 
 # javascript package manager (better than npm)
 brew install yarn
 
-# why do we have zip but not unzip? 
+# why do we have zip but not unzip?
 brew install unzip
 
 # wine!
