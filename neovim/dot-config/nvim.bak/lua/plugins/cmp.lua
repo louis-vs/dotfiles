@@ -1,0 +1,199 @@
+local lspkind = require("lspkind")
+local types = require("cmp.types")
+
+local cmp = require("cmp")
+
+local cmp_git = require("cmp_git")
+cmp_git.setup()
+
+-- load snippets from friendly-snippets into luasnip
+require("luasnip.loaders.from_vscode").lazy_load()
+local luasnip = require("luasnip")
+
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Utils                                                    │
+-- ╰──────────────────────────────────────────────────────────╯
+local check_backspace = function()
+  local col = vim.fn.col(".") - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+end
+
+local function deprioritize_snippet(entry1, entry2)
+  if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
+    return false
+  end
+  if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
+    return true
+  end
+end
+
+local function limit_lsp_types(entry, ctx)
+  local kind = entry:get_kind()
+  local line = ctx.cursor.line
+  local col = ctx.cursor.col
+  local char_before_cursor = string.sub(line, col - 1, col - 1)
+  local char_after_dot = string.sub(line, col, col)
+
+  if char_before_cursor == "." and char_after_dot:match("[a-zA-Z]") then
+    if
+        kind == types.lsp.CompletionItemKind.Method
+        or kind == types.lsp.CompletionItemKind.Field
+        or kind == types.lsp.CompletionItemKind.Property
+    then
+      return true
+    else
+      return false
+    end
+  elseif string.match(line, "^%s+%w+$") then
+    if kind == types.lsp.CompletionItemKind.Function or kind == types.lsp.CompletionItemKind.Variable then
+      return true
+    else
+      return false
+    end
+  end
+
+  return true
+end
+
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Setup                                                    │
+-- ╰──────────────────────────────────────────────────────────╯
+local source_mapping = {
+  npm = "NPM",
+  nvim_lsp = "LSP",
+  buffer = "BUF",
+  nvim_lua = "LUA",
+  luasnip = "SNP",
+  calc = "",
+  path = "󰉖",
+  treesitter = "󰙅",
+  zsh = "ZSH",
+  Copilot = "",
+}
+
+local buffer_option = {
+  -- Complete from all visible buffers (splits)
+  get_bufnrs = function()
+    local bufs = {}
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      bufs[vim.api.nvim_win_get_buf(win)] = true
+    end
+    return vim.tbl_keys(bufs)
+  end,
+}
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-2), { "i", "c" }),
+    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(2), { "i", "c" }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ["<C-e>"] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    -- super tab (selection and jump)
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.confirm { select = true }
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif check_backspace() then
+        fallback()
+      else
+        fallback()
+      end
+    end, { "i", "s", }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s", }),
+  }),
+  formatting = {
+    format = function(entry, vim_item)
+      -- Get the item with kind from the lspkind plugin
+      local item_with_kind = require("lspkind").cmp_format({
+        mode = "symbol_text",
+        maxwidth = 50,
+        symbol_map = source_mapping,
+      })(entry, vim_item)
+
+      item_with_kind.kind = lspkind.symbolic(item_with_kind.kind, { with_text = true })
+      item_with_kind.menu = source_mapping[entry.source.name]
+      item_with_kind.menu = vim.trim(item_with_kind.menu or "")
+      item_with_kind.abbr = string.sub(item_with_kind.abbr, 1, item_with_kind.maxwidth)
+
+      return item_with_kind
+    end,
+  },
+  -- You should specify your *installed* sources.
+  sources = {
+    {
+      name = "nvim_lsp",
+      priority = 10,
+      -- Limits LSP results to specific types based on line context (Fields, Methods, Variables)
+      entry_filter = limit_lsp_types,
+    },
+    --{ name = "copilot", priority = 11, max_item_count = 3 },
+    { name = "npm",         priority = 9 },
+    { name = "git",         priority = 7 },
+    {
+      name = "luasnip",
+      priority = 7,
+      max_item_count = 5,
+    },
+    {
+      name = "buffer",
+      priority = 7,
+      keyword_length = 5,
+      max_item_count = 10,
+      option = buffer_option,
+    },
+    { name = "path",     priority = 4 },
+  },
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+      deprioritize_snippet,
+      cmp.config.compare.exact,
+      cmp.config.compare.locality,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.offset,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.order,
+    },
+  },
+  confirm_opts = {
+    behavior = cmp.ConfirmBehavior.Replace,
+    select = false,
+  },
+  window = {
+    completion = cmp.config.window.bordered({
+      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+    }),
+    documentation = cmp.config.window.bordered({
+      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+    }),
+  },
+  experimental = {
+    ghost_text = false,
+  },
+  performance = {
+    max_view_entries = 100,
+  }
+})
