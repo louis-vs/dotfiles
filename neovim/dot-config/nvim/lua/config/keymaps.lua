@@ -6,7 +6,7 @@ local silent = { silent = true }
 
 -- Diagnostics
 keymap("n", "gl", function()
-  vim.diagnostic.open_float({ border = "rounded", max_width = 100 })
+  vim.diagnostic.open_float({ border = "rounded", max_width = 100, source = true })
 end, silent)
 
 -- Don't yank on delete char

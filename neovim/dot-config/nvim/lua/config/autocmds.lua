@@ -12,3 +12,10 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
 -- Disable highlight on yank
 vim.api.nvim_create_augroup("lazyvim_highlight_yank", { clear = true })
+
+-- Disable highlight of inline code blocks
+-- (I can't work out a better way of doing this)
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "markdown",
+  command = "hi @markup.raw.markdown_inline ctermbg=none guibg=none",
+})
