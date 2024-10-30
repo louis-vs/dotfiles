@@ -21,7 +21,7 @@ history = 100000
 
 [window]
 dynamic_title = true
-opacity = 0.999
+#opacity = 0.999
 
 [window.dimensions]
 columns = 152
