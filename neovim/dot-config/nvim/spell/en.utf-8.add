@@ -1445,3 +1445,8 @@ vultr
 Qualys
 LDAP
 AAD
+env
+linter
+gitattributes
+LF
+DevOps
