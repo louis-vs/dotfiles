@@ -41,3 +41,4 @@ opt.concealcursor  = ""                      --- Set to an empty string to expan
 opt.incsearch      = true                    --- Start searching before pressing enter
 
 vim.g.lazyvim_picker = "telescope"
+vim.g.autoformat = false
