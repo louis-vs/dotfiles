@@ -1450,3 +1450,7 @@ linter
 gitattributes
 LF
 DevOps
+md
+PlotDataModel
+Plotly
+Axios
