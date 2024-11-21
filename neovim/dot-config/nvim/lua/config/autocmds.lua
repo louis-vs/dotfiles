@@ -3,12 +3,12 @@
 -- Add any additional autocmds here
 
 -- Disable autoformat for some files
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  pattern = { "options.lua" },
-  callback = function()
-    vim.b.autoformat = false
-  end,
-})
+--vim.api.nvim_create_autocmd({ "BufEnter" }, {
+--  pattern = { "options.lua" },
+--  callback = function()
+--    vim.b.autoformat = false
+--  end,
+--})
 
 -- Disable highlight on yank
 vim.api.nvim_create_augroup("lazyvim_highlight_yank", { clear = true })
