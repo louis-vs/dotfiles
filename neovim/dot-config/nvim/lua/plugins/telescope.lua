@@ -10,6 +10,11 @@ return {
         },
         prompt_position = "top",
       },
+      mappings = {
+        i = {
+          ["<c-t>"] = require("telescope.actions").select_tab,
+        },
+      },
     },
   },
 }
