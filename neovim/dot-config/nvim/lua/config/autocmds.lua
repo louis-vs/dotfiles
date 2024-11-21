@@ -25,3 +25,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "javascript", "typescript", "css", "html" },
   command = "HighlightColors On",
 })
+
+-- Disable copilot in certain folders
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  pattern = { vim.fn.expand("~") .. "/Work/Faculty/*" },
+  command = "Copilot disable",
+})
