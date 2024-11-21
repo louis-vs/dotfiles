@@ -19,3 +19,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = "markdown",
   command = "hi @markup.raw.markdown_inline ctermbg=none guibg=none",
 })
+
+-- enable highlight colors
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "javascript", "typescript", "css", "html" },
+  command = "HighlightColors On",
+})
