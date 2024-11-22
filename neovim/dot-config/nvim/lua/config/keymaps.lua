@@ -23,3 +23,6 @@ map("n", "<leader>tt", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader>tn", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader>td", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader>tp", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+-- LSP
+map("n", "<leader>cL", "<cmd>LspRestart<CR>", { desc = "Restart LSP" })
