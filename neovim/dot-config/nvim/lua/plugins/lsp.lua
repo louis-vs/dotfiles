@@ -13,6 +13,14 @@ return {
           },
         },
       },
+      ruby_lsp = {
+        mason = false,
+        cmd = { vim.fn.expand("~/Library/asdf/shims/ruby-lsp") },
+      },
+      rubocop = {
+        mason = false,
+        cmd = { vim.fn.expand("~/Library/asdf/shims/rubocop"), "--lsp" },
+      },
     },
   },
 }
