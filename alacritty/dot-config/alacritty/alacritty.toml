@@ -1,3 +1,4 @@
+[general]
 import = ["/Users/louvan/.config/alacritty/kanagawa_wave.toml"]
 
 [cursor]
