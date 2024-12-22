@@ -42,5 +42,5 @@ opt.incsearch      = true                    --- Start searching before pressing
 
 vim.g.lazyvim_picker = "telescope"
 vim.g.autoformat = false
-vim.g.ai_cmp = true -- don't use AI in cmp
+vim.g.ai_cmp = false -- don't use AI in cmp
 vim.g.snacks_animate = false -- disable all snacks animations (consider enabling some of them?)

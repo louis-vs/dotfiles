@@ -12,5 +12,11 @@ return {
       preset = "super-tab",
       --["<C-y>"] = { "select_and_accept" },
     },
+    --menu = {
+    --  direction_priority = { 's' },
+    --  draw = {
+    --    treesitter = { "lsp" },
+    --  },
+    --},
   },
 }
