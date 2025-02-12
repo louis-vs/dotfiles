@@ -1,5 +1,4 @@
 {
-  "$schema" : "https:\/\/app.linearmouse.org\/schema\/0.7.3",
   "schemes" : [
     {
       "pointer" : {
@@ -8,15 +7,31 @@
       },
       "if" : {
         "device" : {
-          "productName" : "MM711 Gaming Mouse",
+          "vendorID" : "0x2516",
           "productID" : "0x101",
-          "category" : "mouse",
-          "vendorID" : "0x2516"
+          "productName" : "MM711 Gaming Mouse",
+          "category" : "mouse"
         }
       },
       "scrolling" : {
         "distance" : 5
       }
+    },
+    {
+      "if" : {
+        "device" : {
+          "productName" : "USB Optical Mouse",
+          "vendorID" : "0x46d",
+          "productID" : "0xc077",
+          "category" : "mouse"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        }
+      }
     }
-  ]
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5"
 }
