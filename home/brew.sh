@@ -4,11 +4,8 @@
 # wine-crossover
 brew tap gcenx/wine
 
-brew install alacritty
 # disable font smoothing (i.e. enable anti-aliasing?) to make font appear thinner
 defaults write -g AppleFontSmoothing -int 0
-
-brew install zellij
 
 # move to trash (bin) as a safe alternative to rm
 brew install trash
@@ -17,11 +14,6 @@ brew install trash
 brew install antigen
 # some default completions for zsh
 brew install zsh-completions
-
-# contains openssl@1.0, needed to install certain (old) versions of ruby
-brew tap rbenv/tap
-# from rbenv/tap
-brew install openssl@1.0
 
 # tool version management
 brew install asdf
@@ -48,6 +40,9 @@ brew install openjdk
 # provies ssh-agent and so on
 brew install gnupg
 
+# GNU sed (different from BSD sed)
+brew install gnu-sed
+
 # NeoVim text editor
 brew install neovim
 
@@ -57,9 +52,9 @@ brew install mono
 # formatter for C family languages
 brew install clang-format
 
+# lua dev
 brew install lua
 brew install luarocks
-brew install libevent
 
 # CMAKE
 brew install cmake
@@ -76,11 +71,6 @@ brew install ripgrep
 
 # find but better
 brew install fd
-
-# terminal multiplexer
-brew install tmux
-# plugin manager for tmux
-brew install tpm
 
 # nice git TUI
 brew install lazygit
@@ -108,6 +98,7 @@ brew install stow
 # work
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
+brew install awscli
 brew install azure-cli
 
 ##############################################
@@ -119,7 +110,6 @@ brew install font-hack-nerd-font
 brew install alacritty
 brew install homebrew/cask/wireshark
 brew install homebrew/cask/syncthing
-brew install obsidian
 
 # macos tweaks
 brew install middleclick
