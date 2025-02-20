@@ -1477,3 +1477,4 @@ FastAPI
 linter
 linters
 DoS
+XSS
