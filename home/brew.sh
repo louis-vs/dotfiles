@@ -43,6 +43,9 @@ brew install gnupg
 # GNU sed (different from BSD sed)
 brew install gnu-sed
 
+# GNU CoreUtils (provides g-prefixed tools)
+brew install coreutils
+
 # NeoVim text editor
 brew install neovim
 
