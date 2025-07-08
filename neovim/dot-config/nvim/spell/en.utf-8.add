@@ -1501,3 +1501,5 @@ SSRF
 E2E
 Cognito
 MRs
+IndexedDB
+Dexie
