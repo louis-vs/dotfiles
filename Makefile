@@ -1,4 +1,4 @@
-stow_cmd = stow --verbose --dotfiles --target=$(HOME) --ignore=\\.DS_Store
+stow_cmd = stow --verbose --dotfiles --target=$(HOME)
 packages = */
 
 all:
