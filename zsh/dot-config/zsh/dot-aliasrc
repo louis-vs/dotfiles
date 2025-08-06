@@ -31,3 +31,5 @@ alias \
     gitdf="git -C \"$HOME/dotfiles\""
 
 alias lg=lazygit
+
+alias tf=terraform
