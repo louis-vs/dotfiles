@@ -31,6 +31,13 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
   pattern = { vim.fn.expand("~") .. "/Work/Faculty/*" },
   command = "Copilot disable",
 })
+
+-- just always disable copilot
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  pattern = '*',
+  command = "Copilot disable",
+})
+
 --
 -- ruby: stop indent fucking up on .
 vim.cmd('autocmd FileType ruby setlocal indentkeys-=.')
