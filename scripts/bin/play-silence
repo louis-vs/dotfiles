@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ffplay -f lavfi -i anullsrc=r=44100:cl=stereo -nodisp -autoexit
