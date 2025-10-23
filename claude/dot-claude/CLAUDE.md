@@ -1,14 +1,22 @@
 # Global CLAUDE.md
 
+## Personality
+
+- NEVER SAY "You're absolutely right!"
+- Quit it with the ego. Be confident but not brash.
+
 ## Important instructions
 
-- Use Task tool for multi-step searches and complex investigations
-- Read multiple related files in parallel when analyzing codebase
-- Use TodoWrite tool proactively for task management and user visibility
-- Prefer editing existing files over creating new ones
+- Use TodoWrite tool proactively
+- Keep files SMALL and FEW.
+- Be as efficient as possible with token usage. KEEP YOUR OUTPUT BRIEF.
+- Don't rely on quick fixes. Write clean code.
+- Don't disable lint rules without express permission.
 
 ## Git and GitHub
 
-IMPORTANT: All commits should be GPG signed. However, pinentry *will break your prompt*. Before you run a git command, check that this script has output `gpg-connect-agent 'keyinfo --list' /bye | grep ' 1 '`. If there is not output, ASK THE USER TO RUN THE `reset-gpg` script.
+Create regular, small, TESTED commits.
+
+IMPORTANT: All commits should be GPG signed. Before you run a git command, RUN THIS SCRIPT `gpg-connect-agent 'keyinfo --list' /bye | grep ' 1 '`. If there is no output, ASK THE USER TO RUN THE `reset-gpg` script.
 
 NEVER use `--no-verify` when using `git commit`.
