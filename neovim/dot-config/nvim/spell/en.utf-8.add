@@ -1511,3 +1511,6 @@ Grafana
 GPG
 Mimir
 tRPC
+Authelia
+config
+etcd
