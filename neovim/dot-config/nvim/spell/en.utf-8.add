@@ -1514,3 +1514,14 @@ tRPC
 Authelia
 config
 etcd
+SSO
+OIDC
+PGL
+SQLite
+k3s
+Alertmanager
+Kubernetes
+semver
+letsencrypt
+authelia
+PVCs
