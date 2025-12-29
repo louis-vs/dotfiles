@@ -36,4 +36,5 @@ bindings = [
     { key = "PageDown", mods = "Control",       action = "ScrollHalfPageDown"},
     { key = "Tab",      mods = "Control",       action = "SelectNextTab"},
     { key = "Tab",      mods = "Control|Shift", action = "SelectPreviousTab"},
+    { key = "Return",   mods = "Shift",         chars = "\u001B\r"},
 ]
