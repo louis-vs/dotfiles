@@ -1,12 +1,14 @@
-# CLAUDE.md
+# Dotfiles CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Personal macOS dotfiles, deployed as symlinks into `$HOME` by GNU Stow.
 
-## What this is
+## Workflow and conventions
 
-Personal macOS dotfiles, deployed as symlinks into `$HOME` by GNU Stow. There is no build or test suite — the "build" is `make`, and verification is checking that symlinks resolve and the target program still starts.
+- Make meaningful, small commits. The only interaction with the remote is `git push`. NEVER raise a PR.
+- Commit messages are `<package>: <lowercase summary>` (e.g. `nvim: spellfile`, `alacritty: claude shift-enter support`). For changes that don't belong to a package, use `core`.
+- Commits are GPG-signed (`commit.gpgSign=true`). If signing fails, run `~/bin/reset-gpg`.
 
-## Commands
+## Usage
 
 ```sh
 make                        # restow all packages (idempotent; run after adding ANY file)
@@ -30,16 +32,16 @@ git diff                                      # confirm what actually came in
 
 Adopt always overwrites repo files with whatever is in `$HOME`, so scope it to one package and dry-run first (`stow ... -n -v`). With an empty placeholder there is nothing to lose; adopting a package with real content in it can silently clobber committed config.
 
-### Adopting a file the program itself writes
+### Adopting a file written by another program
 
 Stow's model assumes the target is a symlink that stays a symlink. Before adopting anything an application rewrites (lock files, state, generated config), check *how* it writes:
 
-- **Writes through the symlink** — opens the path and truncates it (`io.open(p, "w")`, `open(p, O_TRUNC)`, `>` redirection). The link survives. Safe to adopt.
+- **Writes through the symlink** — opens the path and truncates. The link survives. Safe to adopt.
 - **Replaces the path** — writes a temp file then `rename()`s it over the target, the usual "atomic save". This *deletes the symlink* and leaves a real file in `$HOME`. The repo copy silently stops being the live one, and the next `make` reports a conflict.
 
-Find the write call in the program's source before adopting, then verify empirically: trigger a real write, and confirm with `test -L` that the target is still a symlink and that the repo copy changed. Editors and anything advertising crash-safe or atomic saves are the usual offenders; `lazy-lock.json` was checked this way (`lazy/manage/lock.lua:14` uses `io.open(..., "wb")`).
+Find the write call in the program's source before adopting, then verify empirically: trigger a real write, and confirm with `test -L` that the target is still a symlink and that the repo copy changed. Editors and anything advertising crash-safe or atomic saves are the usual offenders.
 
-Separately from safety, weigh whether the churn is *meaningful*: a lock file changes only on an explicit update and each diff is a real event worth committing, whereas a file the program rewrites on its own schedule (see `claude/.claude.json`) just adds noise.
+Separately from safety, weigh whether the churn is *meaningful*: a lock file changes only on an explicit update and each diff is a real event worth committing, whereas a file the program rewrites on its own schedule (e.g. `.claude.json`) just adds noise.
 
 ## Layout rules
 
@@ -50,7 +52,7 @@ Each top-level directory is one stow package, and its contents mirror the path u
 - `scripts/bin/reset-gpg` → `~/bin/reset-gpg` (on `PATH` via `.zshenv`)
 - `gnupg/Library/gnupg/gpg-agent.conf` → `~/Library/gnupg/gpg-agent.conf`
 
-`dot-` is Stow's `--dotfiles` prefix for leading dots; it keeps files unhidden in the repo. Use it for every dotfile — a literal `.name` also stows, but inconsistently with the rest of the repo. `home/dot-stow-global-ignore` → `~/.stow-global-ignore` is what excludes `README.md`, `.git`, `.gitignore`, `.DS_Store` from every package, so per-package READMEs are safe to keep.
+`dot-` is stow's `--dotfiles` prefix for leading dots; it keeps files unhidden in the repo. Use it for every dotfile — a literal `.name` also stows, but inconsistently with the rest of the repo. `home/dot-stow-global-ignore` → `~/.stow-global-ignore` is what excludes `README.md`, `.git`, `.gitignore`, `.DS_Store` from every package, so per-package READMEs are safe to keep.
 
 Most config is XDG-based, and `~/.zshenv` defines the XDG roots first (note the macOS-specific values: `XDG_DATA_HOME=$HOME/Library/`, `XDG_STATE_HOME=$HOME/Library/State`). New tool config belongs in `<pkg>/dot-config/<tool>/`, wired up with the tool's env var (`ASDF_CONFIG_FILE`, `GNUPGHOME`, `ZDOTDIR`, …) in `zsh/dot-config/zsh/dot-zshrc` if the tool doesn't find it automatically.
 
@@ -58,11 +60,5 @@ Most config is XDG-based, and `~/.zshenv` defines the XDG roots first (note the 
 
 - **zsh** — `.zshenv` sets XDG paths and `ZDOTDIR`, so everything else lives in `dot-config/zsh/`: `.zshrc` (env + init), `.antigenrc` (plugins via antigen/oh-my-zsh, powerlevel10k theme), `.aliasrc`, `.p10k.zsh` (generated by `p10k configure` — don't hand-edit).
 - **neovim** — LazyVim. `lua/config/extras.lua` selects LazyVim extras, `lua/plugins/*.lua` overrides them (one file per concern; `disable.lua` turns plugins off). `lazy-lock.json` is tracked, which is what pins the plugin set (the spec itself uses `version = false`, i.e. always latest commit). lazy.nvim rewrites it in place, so the stow symlink survives; commit the change after any `:Lazy update`, and use `:Lazy restore` to roll back to a committed state. `lazyvim.json` is deliberately *not* tracked: `extras` in it is empty (extras are declared in `lua/config/extras.lua`) and the rest is LazyVim's own state — a NEWS.md read marker and schema-version fields — so tracking it only produces churn that reflects no config change. Format Lua with stylua (`stylua.toml`: 2 spaces, 120 cols).
-- **claude** — `dot-claude/CLAUDE.md` is the global instruction file symlinked to `~/.claude/CLAUDE.md`, so editing it here changes Claude Code's behaviour everywhere. `claude/.claude.json` is Claude Code's live state file: it is rewritten constantly and will nearly always show as dirty in `git status`. Don't fold unrelated churn from it into a commit.
-- **home** — `brew.sh` is a documentation-style install script, not run by `make`.
-
-## Conventions
-
-- Commit messages are `<package>: <lowercase summary>` (e.g. `nvim: spellfile`, `alacritty: claude shift-enter support`).
-- Commits are GPG-signed (`commit.gpgSign=true`). If signing fails, run `~/bin/reset-gpg`.
-- Default branch is `master`.
+- **claude** — `dot-claude/CLAUDE.md` is the global instruction file symlinked to `~/.claude/CLAUDE.md`, so editing it here changes Claude Code's behaviour everywhere.
+- **home** — `brew.sh` is a documentation-style install script, intended to keep track of useful packages I've installed.
