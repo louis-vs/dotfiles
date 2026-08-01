@@ -16,8 +16,7 @@ make packages=zsh           # restow one package
 make delete packages=zsh    # remove a package's symlinks
 make adopt packages=zsh     # pull existing $HOME files into the package (destructive to repo files)
 make eject packages=zsh     # inverse of adopt: symlinks become real files, repo copy removed
-make eject packages=zsh dry=1                          # preview an eject
-stow --verbose --dotfiles --target=$HOME -n -v <pkg>   # dry run — do this before `adopt`
+make adopt packages=zsh dry=1   # dry=1 works on any target: print the plan, change nothing
 ```
 
 `make` only creates links for files that exist at run time, so a new file in an already-stowed package is invisible until you rerun it.
@@ -32,7 +31,7 @@ make adopt packages=neovim                    # overwrites it with ~/.config/nvi
 git diff                                      # confirm what actually came in
 ```
 
-Adopt always overwrites repo files with whatever is in `$HOME`, so scope it to one package and dry-run first (`stow ... -n -v`). With an empty placeholder there is nothing to lose; adopting a package with real content in it can silently clobber committed config.
+Adopt always overwrites repo files with whatever is in `$HOME`, so scope it to one package and dry-run first (`dry=1`). With an empty placeholder there is nothing to lose; adopting a package with real content in it can silently clobber committed config.
 
 ### Adopting a file written by another program
 
