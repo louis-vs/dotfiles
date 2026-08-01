@@ -15,8 +15,9 @@ delete:
 adopt:
 	$(stow_cmd) $(dry_flag) --adopt $(packages)
 
-# unlike the others, this refuses the `*/` default: ejecting every package by
-# accident would empty the repo into $HOME
+# takes packages= or paths= (one file, repo-relative). Unlike the others it
+# refuses the `*/` default: ejecting every package would empty the repo.
 eject:
-	@[ "$(packages)" != "*/" ] || { echo "eject needs explicit packages, e.g. make eject packages=zsh" >&2; exit 2; }
-	@DRY="$(dry)" ./eject.sh $(packages)
+	@[ -n "$(paths)" ] || [ "$(packages)" != "*/" ] || { echo "eject needs packages=<pkg> or paths=<pkg/file>" >&2; exit 2; }
+	@[ -z "$(paths)" ] || [ "$(packages)" = "*/" ] || { echo "eject takes packages= or paths=, not both" >&2; exit 2; }
+	@DRY="$(dry)" ./eject.sh $(if $(paths),$(paths),$(packages))

@@ -16,7 +16,7 @@ You can prefix files that start with a dot with `dot-` instead so they aren't tr
 
 You can use `make adopt` to pull files into stow packages. Careful with this – you probably want to specify specific packages when you do this, and to check with `dry=1` first.
 
-`make eject packages=<pkg>` is the opposite of adopt: it turns that package's symlinks back into real files in `$HOME` and drops the repo's copy, so you can stop managing something without losing it. It only touches links that point into this repo, and it requires you to name the packages.
+`make eject packages=<pkg>` is the opposite of adopt: it turns that package's symlinks back into real files in `$HOME` and drops the repo's copy, so you can stop managing something without losing it. It only touches links that point into this repo, and it requires you to name what to eject. Use `paths=<pkg>/<file>` instead of `packages=` to eject a single file and leave the rest of the package linked.
 
 To add a new package, first create the files you want to include into a new folder, or move files that already exist here. Then run `make packages=<new package name>` to create symlinks.
 

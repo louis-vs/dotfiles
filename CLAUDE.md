@@ -16,6 +16,7 @@ make packages=zsh           # restow one package
 make delete packages=zsh    # remove a package's symlinks
 make adopt packages=zsh     # pull existing $HOME files into the package (destructive to repo files)
 make eject packages=zsh     # inverse of adopt: symlinks become real files, repo copy removed
+make eject paths=zsh/dot-config/zsh/dot-aliasrc   # eject a single file, leaving the rest linked
 make adopt packages=zsh dry=1   # dry=1 works on any target: print the plan, change nothing
 ```
 
@@ -46,12 +47,13 @@ Separately from safety, weigh whether the churn is *meaningful*: a lock file cha
 
 ## Taking a package back out
 
-`make eject packages=<pkg>` runs `eject.sh`, the inverse of adopt: every `$HOME` symlink the package owns becomes the real file, and the repo's copy is deleted. The script sits at the repo root because every top-level *directory* is a stow package — a `tools/` dir would itself get stowed into `$HOME`.
+`make eject` runs `eject.sh`, the inverse of adopt: a `$HOME` symlink becomes the real file, and the repo's copy is deleted. Take a whole package with `packages=<pkg>`, or one file with `paths=<pkg>/<file>` (repo-relative, as the path appears here). The script sits at the repo root because every top-level *directory* is a stow package — a `tools/` dir would itself get stowed into `$HOME`.
 
 What not to break if you rewrite it:
 
 - It only acts on links that resolve back into this repo, so stow-ignored files (`.gitignore`) are left alone rather than moved out.
 - It handles tree folding: when a package owns a whole target directory, stow links the *directory* rather than its files (`~/bin` → `scripts/bin`), so eject unstows first, then rebuilds the real directory.
+- Ejecting one file therefore unstows the whole package, moves that file out, and restows the rest — the file has no symlink of its own to remove when the package is folded. That restow happens *only* in single-file mode; doing it after a whole-package eject would link files stow had deliberately skipped.
 - It refuses the `packages = */` default, which would otherwise empty the repo into `$HOME`.
 - The `dot-` → `.` translation is `sed 's|/dot-|/.|g'` on a slash-prefixed path. Not an alternation like `\(^\|/\)` — that's a GNU extension, and BSD sed silently fails to match it, which makes every target look unmanaged.
 
