@@ -18,4 +18,4 @@ NEVER use `--no-verify` when using `git commit`.
 
 Use `fd` and `rg`, not `find` or `grep`.
 
-Use `uv run` to run python scripts. Define script dependencies in a `/// script` block.
+Prefer python for scripts, unless bash is the right tool for the job. Use `uv run` to run python scripts. Define script dependencies in a `/// script` block.
