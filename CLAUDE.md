@@ -15,6 +15,8 @@ make                        # restow all packages (idempotent; run after adding 
 make packages=zsh           # restow one package
 make delete packages=zsh    # remove a package's symlinks
 make adopt packages=zsh     # pull existing $HOME files into the package (destructive to repo files)
+make eject packages=zsh     # inverse of adopt: symlinks become real files, repo copy removed
+make eject packages=zsh dry=1                          # preview an eject
 stow --verbose --dotfiles --target=$HOME -n -v <pkg>   # dry run — do this before `adopt`
 ```
 
@@ -42,6 +44,17 @@ Stow's model assumes the target is a symlink that stays a symlink. Before adopti
 Find the write call in the program's source before adopting, then verify empirically: trigger a real write, and confirm with `test -L` that the target is still a symlink and that the repo copy changed. Editors and anything advertising crash-safe or atomic saves are the usual offenders.
 
 Separately from safety, weigh whether the churn is *meaningful*: a lock file changes only on an explicit update and each diff is a real event worth committing, whereas a file the program rewrites on its own schedule (e.g. `.claude.json`) just adds noise.
+
+## Taking a package back out
+
+`make eject packages=<pkg>` runs `eject.sh`, the inverse of adopt: every `$HOME` symlink the package owns becomes the real file, and the repo's copy is deleted. The script sits at the repo root because every top-level *directory* is a stow package — a `tools/` dir would itself get stowed into `$HOME`.
+
+What not to break if you rewrite it:
+
+- It only acts on links that resolve back into this repo, so stow-ignored files (`.gitignore`) are left alone rather than moved out.
+- It handles tree folding: when a package owns a whole target directory, stow links the *directory* rather than its files (`~/bin` → `scripts/bin`), so eject unstows first, then rebuilds the real directory.
+- It refuses the `packages = */` default, which would otherwise empty the repo into `$HOME`.
+- The `dot-` → `.` translation is `sed 's|/dot-|/.|g'` on a slash-prefixed path. Not an alternation like `\(^\|/\)` — that's a GNU extension, and BSD sed silently fails to match it, which makes every target look unmanaged.
 
 ## Layout rules
 
