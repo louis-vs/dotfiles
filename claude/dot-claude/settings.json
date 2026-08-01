@@ -1,0 +1,34 @@
+{
+  "model": "opus",
+  "permissions": {
+    "allow": [
+      "Bash(fd:*)",
+      "Bash(rg:*)"
+    ],
+    "deny": [
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(egrep:*)",
+      "Bash(fgrep:*)",
+      "Bash(sudo:*)",
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)",
+      "Bash(dd:*)",
+      "Bash(mkfs:*)",
+      "Bash(diskutil:*)",
+      "Bash(shutdown:*)",
+      "Bash(reboot:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git clean -f:*)",
+      "Bash(git commit --no-verify:*)",
+      "Read(~/.ssh/**)",
+      "Read(~/Library/gnupg/**)"
+    ],
+    "ask": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(~/.aws/**)"
+    ]
+  }
+}
