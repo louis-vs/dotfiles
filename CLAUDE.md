@@ -30,6 +30,17 @@ git diff                                      # confirm what actually came in
 
 Adopt always overwrites repo files with whatever is in `$HOME`, so scope it to one package and dry-run first (`stow ... -n -v`). With an empty placeholder there is nothing to lose; adopting a package with real content in it can silently clobber committed config.
 
+### Adopting a file the program itself writes
+
+Stow's model assumes the target is a symlink that stays a symlink. Before adopting anything an application rewrites (lock files, state, generated config), check *how* it writes:
+
+- **Writes through the symlink** — opens the path and truncates it (`io.open(p, "w")`, `open(p, O_TRUNC)`, `>` redirection). The link survives. Safe to adopt.
+- **Replaces the path** — writes a temp file then `rename()`s it over the target, the usual "atomic save". This *deletes the symlink* and leaves a real file in `$HOME`. The repo copy silently stops being the live one, and the next `make` reports a conflict.
+
+Find the write call in the program's source before adopting, then verify empirically: trigger a real write, and confirm with `test -L` that the target is still a symlink and that the repo copy changed. Editors and anything advertising crash-safe or atomic saves are the usual offenders; `lazy-lock.json` was checked this way (`lazy/manage/lock.lua:14` uses `io.open(..., "wb")`).
+
+Separately from safety, weigh whether the churn is *meaningful*: a lock file changes only on an explicit update and each diff is a real event worth committing, whereas a file the program rewrites on its own schedule (see `claude/.claude.json`) just adds noise.
+
 ## Layout rules
 
 Each top-level directory is one stow package, and its contents mirror the path under `$HOME` exactly:
