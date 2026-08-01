@@ -13,6 +13,8 @@ make                        # restow all packages (idempotent; run after adding 
 make packages=zsh           # restow one package
 make delete packages=zsh    # remove a package's symlinks
 make adopt packages=zsh     # pull existing $HOME files into the package (destructive to repo files)
+make eject packages=zsh     # inverse of adopt: symlinks become real files, repo copy removed
+make eject packages=zsh dry=1                          # show what eject would do
 stow --verbose --dotfiles --target=$HOME -n -v <pkg>   # dry run — do this before `adopt`
 ```
 
@@ -29,6 +31,18 @@ git diff                                      # confirm what actually came in
 ```
 
 Adopt always overwrites repo files with whatever is in `$HOME`, so scope it to one package and dry-run first (`stow ... -n -v`). With an empty placeholder there is nothing to lose; adopting a package with real content in it can silently clobber committed config.
+
+## Taking a package back out: `make eject`
+
+`eject.sh` (called by `make eject`) is the inverse of adopt: for each file the package owns it replaces the `$HOME` symlink with the real file and deletes the repo's copy, leaving `$HOME` self-contained. It lives at the repo root because every top-level *directory* is a stow package — a `tools/` dir would get stowed into `$HOME`.
+
+Three things it does that are easy to get wrong if you rewrite it:
+
+- **Only touches links that resolve back into this repo.** Files stow never linked (`.gitignore`, anything an ignore list covers) are reported and left in the repo rather than moved out.
+- **Handles tree folding.** When a package owns an entire target directory, stow links the *directory*, not the files — `~/bin` → `scripts/bin` is the live example. Ejecting means `stow --delete` first, then recreating the real directory and moving files in.
+- **Refuses the `packages = */` default.** `make eject` with no arguments would otherwise empty the whole repo into `$HOME`, so the Makefile requires an explicit package.
+
+The `dot-` → `.` translation is done with `sed 's|/dot-|/.|g'` on a slash-prefixed path. Don't "simplify" it to an alternation like `\(^\|/\)` — that's a GNU extension and macOS ships BSD sed, where it silently fails to match and every target then looks unmanaged.
 
 ### Adopting a file the program itself writes
 
