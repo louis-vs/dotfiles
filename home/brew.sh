@@ -78,12 +78,13 @@ brew install fd
 
 # nice git TUI
 brew install lazygit
+# git pager
+brew install git-delta
 
 # cat but better
 brew install bat
-# bat but prettier
+# bat but prettier (for markdown)
 brew install glow
-
 
 # language servers
 brew install lua-language-server

@@ -1,7 +1,27 @@
+[user]
+    name=Louis Van Steene
+    email=louis@lvs.me.uk
+    signingKey=1F718C878A87C7F59396BD1420ACAD2AC9F1949D
+
+[init]
+	defaultBranch = master
+
 [core]
     eol=lf
     editor=nvim
     whitespace=-space-before-tab
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+# delta pager
+[delta]
+    navigate = true
+    dark = true
+
+[diff]
+	tool = nvimdiff
 
 [color]
     ui=always
@@ -9,11 +29,5 @@
 [commit]
     gpgSign=true
 
-[user]
-    name=Louis Van Steene
-    email=louis@lvs.me.uk
-    signingKey=1F718C878A87C7F59396BD1420ACAD2AC9F1949D
-[init]
-	defaultBranch = master
-[diff]
-	tool = nvimdiff
+[merge]
+    conflictStyle = zdiff3 # needed for delta
