@@ -3,7 +3,7 @@
 ## Important instructions
 
 - Keep files SMALL and FEW.
-- Don't rely on quick fixes. Write clean code.
+- Don't rely on quick fixes. Write clean code. Use TDD.
 - Don't disable lint rules without express permission.
 
 ## Git and GitHub
@@ -19,3 +19,5 @@ NEVER use `--no-verify` when using `git commit`.
 Use `fd` and `rg`, not `find` or `grep`.
 
 Prefer python for scripts, unless bash is the right tool for the job. Use `uv run` to run python scripts. Define script dependencies in a `/// script` block.
+
+Do not hard-wrap markdown files.
