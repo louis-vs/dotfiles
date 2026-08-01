@@ -16,7 +16,8 @@ make packages=zsh           # restow one package
 make delete packages=zsh    # remove a package's symlinks
 make adopt packages=zsh     # pull existing $HOME files into the package (destructive to repo files)
 make eject packages=zsh     # inverse of adopt: symlinks become real files, repo copy removed
-make eject paths=zsh/dot-config/zsh/dot-aliasrc   # eject a single file, leaving the rest linked
+make eject paths=zsh/dot-config/zsh/dot-aliasrc   # eject one file, leaving the rest of the package linked
+make eject paths="zsh/dot-config/zsh/dot-aliasrc git/dot-config/git/ignore"   # several; quotes required
 make adopt packages=zsh dry=1   # dry=1 works on any target: print the plan, change nothing
 ```
 
@@ -47,7 +48,7 @@ Separately from safety, weigh whether the churn is *meaningful*: a lock file cha
 
 ## Taking a package back out
 
-`make eject` runs `eject.sh`, the inverse of adopt: a `$HOME` symlink becomes the real file, and the repo's copy is deleted. Take a whole package with `packages=<pkg>`, or one file with `paths=<pkg>/<file>` (repo-relative, as the path appears here). The script sits at the repo root because every top-level *directory* is a stow package — a `tools/` dir would itself get stowed into `$HOME`.
+`make eject` runs `eject.sh`, the inverse of adopt: a `$HOME` symlink becomes the real file, and the repo's copy is deleted. Take a whole package with `packages=<pkg>`, or individual files with `paths=<pkg>/<file>` (repo-relative, as the path appears here). Both accept several space-separated values, quoted — unquoted, make reads the second one as a target and stops. The script sits at the repo root because every top-level *directory* is a stow package — a `tools/` dir would itself get stowed into `$HOME`.
 
 What not to break if you rewrite it:
 
