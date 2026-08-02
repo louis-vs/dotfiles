@@ -23,3 +23,7 @@ Use `fd` and `rg`, not `find` or `grep`.
 Prefer python for scripts, unless bash is the right tool for the job. Use `uv run` to run python scripts. Define script dependencies in a `/// script` block.
 
 Do not hard-wrap markdown files.
+
+## Subagents
+
+When spawning subagents for implementations `sonnet` model for speed and cost efficiency. Use `opus` in subagents for planning or deep research.
