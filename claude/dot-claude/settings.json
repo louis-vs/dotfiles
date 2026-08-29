@@ -5,10 +5,8 @@
       "Bash(rg:*)"
     ],
     "deny": [
+      "Bash(brew:*)",
       "Bash(find:*)",
-      "Bash(grep:*)",
-      "Bash(egrep:*)",
-      "Bash(fgrep:*)",
       "Bash(sudo:*)",
       "Bash(rm -rf:*)",
       "Bash(rm -fr:*)",
@@ -50,6 +48,43 @@
     "pr-review-toolkit@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "ruby-lsp@claude-plugins-official": true
+    "ruby-lsp@claude-plugins-official": true,
+    "superpowers-ruby@superpowers-ruby": false
+  },
+  "extraKnownMarketplaces": {
+    "superpowers-ruby": {
+      "source": {
+        "source": "github",
+        "repo": "lucianghinda/superpowers-ruby"
+      }
+    }
+  },
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: Private — github.com/louis-vs/vsmp-portal (per gh)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: config/credentials.yml.enc (decrypted via config/master.key, gitignored, never committed); .kamal/secrets is gitignored (.kamal/secrets.example is the only tracked variant)",
+      "**Default / protected branches**: main (default). Protected branches: none listed via gh; rulesets not queryable here, so this is not confirmed unprotected — treat main as sensitive for force-push/history-rewrite purposes anyway",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Source control**: The trusted repo (louis-vs/vsmp-portal on github.com) and its remote(s) only",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: `~/Projects/vsmp-data` (real writer names, CISAC IP codes, payment amounts — deliberately kept outside this repo, per CLAUDE.md); config/credentials.yml.enc and config/master.key (app secrets); .kamal/secrets (deploy secrets); untracked artefacts like log/development.log may contain real data but are explicitly out of scope per CLAUDE.md — share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (Ruby/Rails — VSMP Portal royalty accounting app)",
+      "**Trusted repo**: /Users/louis/Projects/vsmp-portal (github.com/louis-vs/vsmp-portal, private) and its configured remote(s)",
+      "**Org-specific CLIs**: None configured",
+      "**Routine under this repo's bin/ prefix**: bin/ci, bin/setup, bin/dev, bin/rails, bin/check_no_data, bin/bundler-audit — routine per project docs and heavy transcript usage (bin, 71×)"
+    ]
   }
 }
