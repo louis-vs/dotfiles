@@ -2,9 +2,11 @@
 
 This repo contains my personal dotfiles collection, written for macOS.
 
+Each stow package is a directory under `stow/`. Everything else (`Makefile`, `eject.sh`, docs) stays at the repo root and is never stowed.
+
 ## Usage
 
-Clone the repo (e.g. into `~/dotfiles`), then run `make` to install symlinks to your `$HOME` directory. To remove symlinks, run `make delete`.
+Clone the repo (e.g. into `~/dotfiles`), then run `make` from the repo root to install symlinks to your `$HOME` directory. To remove symlinks, run `make delete`.
 
 By default, commands affect all packages. Specify the `packages` variable to run `stow` on particular packages, e.g. `make delete packages=zsh`.
 
@@ -16,8 +18,8 @@ You can prefix files that start with a dot with `dot-` instead so they aren't tr
 
 You can use `make adopt` to pull files into stow packages. Careful with this – you probably want to specify specific packages when you do this, and to check with `dry=1` first.
 
-`make eject packages=<pkg>` is the opposite of adopt: it turns that package's symlinks back into real files in `$HOME` and drops the repo's copy, so you can stop managing something without losing it. It only touches links that point into this repo, and it requires you to name what to eject. Use `paths=<pkg>/<file>` instead of `packages=` to eject individual files and leave the rest of the package linked, e.g. `make eject paths="neovim/dot-config/nvim/lazy-lock.json neovim/dot-config/nvim/init.lua"` — quote the value if you pass more than one.
+`make eject packages=<pkg>` is the opposite of adopt: it turns that package's symlinks back into real files in `$HOME` and drops the repo's copy, so you can stop managing something without losing it. It only touches links that point into this repo, and it requires you to name what to eject. Use `paths=<pkg>/<file>` (relative to `stow/`) instead of `packages=` to eject individual files and leave the rest of the package linked, e.g. `make eject paths="neovim/dot-config/nvim/lazy-lock.json neovim/dot-config/nvim/init.lua"` — quote the value if you pass more than one.
 
-To add a new package, first create the files you want to include into a new folder, or move files that already exist here. Then run `make packages=<new package name>` to create symlinks.
+To add a new package, first create the files you want to include into a new folder under `stow/`, or move files that already exist here. Then run `make packages=<new package name>` to create symlinks.
 
 Some programs (e.g. GnuPG) might require you to fiddle with permissions after you clone the repo and run stow.

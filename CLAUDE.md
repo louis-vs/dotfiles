@@ -1,6 +1,10 @@
 # Dotfiles CLAUDE.md
 
-Personal macOS dotfiles, deployed as symlinks into `$HOME` by GNU Stow.
+Personal macOS dotfiles, deployed as symlinks into `$HOME` by GNU Stow. Every stow package lives under `stow/`; the `Makefile`, `eject.sh` and docs stay at the repo root, outside stow's reach.
+
+## important instructions
+
+NEVER run destructive commands (e.g. `make delete`) without explicit permission.
 
 ## Workflow and conventions
 
@@ -28,9 +32,9 @@ make adopt packages=zsh dry=1   # dry=1 works on any target: print the plan, cha
 `stow --adopt` only resolves *conflicts* — it acts on a target file when the package already has an entry at that path, and ignores anything else in the target directory. So the way to adopt is to create an empty placeholder in the package first, then let adopt overwrite it with the real file's contents:
 
 ```sh
-touch neovim/dot-config/nvim/lazy-lock.json   # placeholder at the mirrored path
-make adopt packages=neovim                    # overwrites it with ~/.config/nvim/lazy-lock.json, then symlinks
-git diff                                      # confirm what actually came in
+touch stow/neovim/dot-config/nvim/lazy-lock.json   # placeholder at the mirrored path
+make adopt packages=neovim                         # overwrites it with ~/.config/nvim/lazy-lock.json, then symlinks
+git diff                                           # confirm what actually came in
 ```
 
 Adopt always overwrites repo files with whatever is in `$HOME`, so scope it to one package and dry-run first (`dry=1`). With an empty placeholder there is nothing to lose; adopting a package with real content in it can silently clobber committed config.
@@ -48,32 +52,32 @@ Separately from safety, weigh whether the churn is *meaningful*: a lock file cha
 
 ## Taking a package back out
 
-`make eject` runs `eject.sh`, the inverse of adopt: a `$HOME` symlink becomes the real file, and the repo's copy is deleted. Take a whole package with `packages=<pkg>`, or individual files with `paths=<pkg>/<file>` (repo-relative, as the path appears here). Both accept several space-separated values, quoted — unquoted, make reads the second one as a target and stops. The script sits at the repo root because every top-level *directory* is a stow package — a `tools/` dir would itself get stowed into `$HOME`.
+`make eject` runs `eject.sh`, the inverse of adopt: a `$HOME` symlink becomes the real file, and the repo's copy is deleted. Take a whole package with `packages=<pkg>`, or individual files with `paths=<pkg>/<file>` (relative to `stow/`, i.e. the path as it appears here minus that prefix). Both accept several space-separated values, quoted — unquoted, make reads the second one as a target and stops. The script sits at the repo root, alongside the `Makefile`; only `stow/` is passed to stow as `--dir`, so nothing at the root is ever a candidate for stowing.
 
 What not to break if you rewrite it:
 
 - It only acts on links that resolve back into this repo, so stow-ignored files (`.gitignore`) are left alone rather than moved out.
-- It handles tree folding: when a package owns a whole target directory, stow links the *directory* rather than its files (`~/bin` → `scripts/bin`), so eject unstows first, then rebuilds the real directory.
+- It handles tree folding: when a package owns a whole target directory, stow links the *directory* rather than its files (`~/bin` → `stow/scripts/bin`), so eject unstows first, then rebuilds the real directory.
 - Ejecting one file therefore unstows the whole package, moves that file out, and restows the rest — the file has no symlink of its own to remove when the package is folded. That restow happens *only* in single-file mode; doing it after a whole-package eject would link files stow had deliberately skipped.
 - It refuses the `packages = */` default, which would otherwise empty the repo into `$HOME`.
 - The `dot-` → `.` translation is `sed 's|/dot-|/.|g'` on a slash-prefixed path. Not an alternation like `\(^\|/\)` — that's a GNU extension, and BSD sed silently fails to match it, which makes every target look unmanaged.
 
 ## Layout rules
 
-Each top-level directory is one stow package, and its contents mirror the path under `$HOME` exactly:
+Each directory under `stow/` is one stow package, and its contents mirror the path under `$HOME` exactly:
 
-- `zsh/dot-zshenv` → `~/.zshenv`
-- `git/dot-config/git/config` → `~/.config/git/config`
-- `scripts/bin/reset-gpg` → `~/bin/reset-gpg` (on `PATH` via `.zshenv`)
-- `gnupg/Library/gnupg/gpg-agent.conf` → `~/Library/gnupg/gpg-agent.conf`
+- `stow/zsh/dot-zshenv` → `~/.zshenv`
+- `stow/git/dot-config/git/config` → `~/.config/git/config`
+- `stow/scripts/bin/reset-gpg` → `~/bin/reset-gpg` (on `PATH` via `.zshenv`)
+- `stow/gnupg/Library/gnupg/gpg-agent.conf` → `~/Library/gnupg/gpg-agent.conf`
 
-`dot-` is stow's `--dotfiles` prefix for leading dots; it keeps files unhidden in the repo. Use it for every dotfile — a literal `.name` also stows, but inconsistently with the rest of the repo. `home/dot-stow-global-ignore` → `~/.stow-global-ignore` is what excludes `README.md`, `.git`, `.gitignore`, `.DS_Store` from every package, so per-package READMEs are safe to keep.
+`dot-` is stow's `--dotfiles` prefix for leading dots; it keeps files unhidden in the repo. Use it for every dotfile — a literal `.name` also stows, but inconsistently with the rest of the repo. `stow/home/dot-stow-global-ignore` → `~/.stow-global-ignore` is what excludes `README.md`, `.git`, `.gitignore`, `.DS_Store` from every package, so per-package READMEs are safe to keep.
 
-Most config is XDG-based, and `~/.zshenv` defines the XDG roots first (note the macOS-specific values: `XDG_DATA_HOME=$HOME/Library/`, `XDG_STATE_HOME=$HOME/Library/State`). New tool config belongs in `<pkg>/dot-config/<tool>/`, wired up with the tool's env var (`ASDF_CONFIG_FILE`, `GNUPGHOME`, `ZDOTDIR`, …) in `zsh/dot-config/zsh/dot-zshrc` if the tool doesn't find it automatically.
+Most config is XDG-based, and `~/.zshenv` defines the XDG roots first (note the macOS-specific values: `XDG_DATA_HOME=$HOME/Library/`, `XDG_STATE_HOME=$HOME/Library/State`). New tool config belongs in `stow/<pkg>/dot-config/<tool>/`, wired up with the tool's env var (`ASDF_CONFIG_FILE`, `GNUPGHOME`, `ZDOTDIR`, …) in `stow/zsh/dot-config/zsh/dot-zshrc` if the tool doesn't find it automatically.
 
 ## Package notes
 
 - **zsh** — `.zshenv` sets XDG paths and `ZDOTDIR`, so everything else lives in `dot-config/zsh/`: `.zshrc` (env + init), `.antigenrc` (plugins via antigen/oh-my-zsh, powerlevel10k theme), `.aliasrc`, `.p10k.zsh` (generated by `p10k configure` — don't hand-edit).
-- **neovim** — LazyVim. `lua/config/extras.lua` selects LazyVim extras, `lua/plugins/*.lua` overrides them (one file per concern; `disable.lua` turns plugins off). `lazy-lock.json` is tracked, which is what pins the plugin set (the spec itself uses `version = false`, i.e. always latest commit). lazy.nvim rewrites it in place, so the stow symlink survives; commit the change after any `:Lazy update`, and use `:Lazy restore` to roll back to a committed state. `lazyvim.json` is deliberately *not* tracked: `extras` in it is empty (extras are declared in `lua/config/extras.lua`) and the rest is LazyVim's own state — a NEWS.md read marker and schema-version fields — so tracking it only produces churn that reflects no config change. Format Lua with stylua (`stylua.toml`: 2 spaces, 120 cols). The spellfile lives at `neovim/Library/nvim/site/spell/en.utf-8.add` → `~/Library/nvim/site/spell/` (i.e. `stdpath('data')/site`, *not* the config dir — nvim's `zg` picks the data dir); `zg` appends through the symlink and regenerates the `.add.spl` next to it in place, so both stay linked and both are tracked.
-- **claude** — `dot-claude/CLAUDE.md` is the global instruction file symlinked to `~/.claude/CLAUDE.md`, so editing it here changes Claude Code's behaviour everywhere. Plugins are declared, not vendored: `enabledPlugins` in `settings.json` is the tracked part, while the plugin bodies stay a local cache in `~/.claude/plugins`. Skills have no such declaration, so third-party ones are vendored under `dot-claude/skills/<name>/` with the upstream repo and commit recorded in the commit message — refresh by re-downloading over the tree and reading `git diff`. `~/.claude/skills` is a *folded* symlink to `dot-claude/skills/` (the directory itself is the link), so any skill written by skill-creator or by hand lands straight in this repo as untracked files.
+- **neovim** — LazyVim. `lua/config/extras.lua` selects LazyVim extras, `lua/plugins/*.lua` overrides them (one file per concern; `disable.lua` turns plugins off). `lazy-lock.json` is tracked, which is what pins the plugin set (the spec itself uses `version = false`, i.e. always latest commit). lazy.nvim rewrites it in place, so the stow symlink survives; commit the change after any `:Lazy update`, and use `:Lazy restore` to roll back to a committed state. `lazyvim.json` is deliberately *not* tracked: `extras` in it is empty (extras are declared in `lua/config/extras.lua`) and the rest is LazyVim's own state — a NEWS.md read marker and schema-version fields — so tracking it only produces churn that reflects no config change. Format Lua with stylua (`stylua.toml`: 2 spaces, 120 cols). The spellfile lives at `stow/neovim/Library/nvim/site/spell/en.utf-8.add` → `~/Library/nvim/site/spell/` (i.e. `stdpath('data')/site`, *not* the config dir — nvim's `zg` picks the data dir); `zg` appends through the symlink and regenerates the `.add.spl` next to it in place, so both stay linked and both are tracked.
+- **claude** — `stow/claude/dot-claude/CLAUDE.md` is the global instruction file symlinked to `~/.claude/CLAUDE.md`, so editing it here changes Claude Code's behaviour everywhere. Plugins are declared, not vendored: `enabledPlugins` in `settings.json` is the tracked part, while the plugin bodies stay a local cache in `~/.claude/plugins`. Skills have no such declaration, so third-party ones are vendored under `stow/claude/dot-claude/skills/<name>/` with the upstream repo and commit recorded in the commit message — refresh by re-downloading over the tree and reading `git diff`. `~/.claude/skills` is a *folded* symlink to `stow/claude/dot-claude/skills/` (the directory itself is the link), so any skill written by skill-creator or by hand lands straight in this repo as untracked files.
 - **home** — `brew.sh` is a documentation-style install script, intended to keep track of useful packages I've installed.
