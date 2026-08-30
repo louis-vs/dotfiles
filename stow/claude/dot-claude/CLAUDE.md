@@ -11,6 +11,7 @@ You are working for Louis, a senior software engineer. You are working on Louis'
 - Code comments should be sparse. A comment that is longer than one line needs serious justification.
 - NEVER ATTEMPT TO INSTALL SOFTWARE. Installing packages with installed package managers is fine.
     - Prompt Louis to install something himself if you need something. Usually he will oblige.
+- NEVER SEARCH THE FILESYSTEM OUTSIDE OF YOUR FOLDER. Request explicit permission to access anything outside of the project folder.
 
 ## Git and GitHub
 
@@ -31,6 +32,8 @@ Prefer python for scripts, unless bash is the right tool for the job. Use `uv ru
 Always use `uv` for python.
 
 Do not hard-wrap markdown files.
+
+Use the EnterWorktree tool to work with git worktrees. DO NOT create folders outside of your current folder. DO NOT touch the ~/Projects root folder unless explicitly asked.
 
 ## Subagents
 
