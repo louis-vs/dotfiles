@@ -16,7 +16,9 @@
         "id": "13caf5c1-8a43-4ee9-8e35-0270fc79c1b2",
         "type": "session-usage",
         "backgroundColor": "bgBrightGreen"
-      },
+      }
+    ],
+    [
       {
         "id": "23553bc2-8c87-4056-9743-93eb8caf98f0",
         "type": "current-working-dir"
@@ -31,8 +33,7 @@
         "type": "git-changes",
         "color": "yellow"
       }
-    ],
-    []
+    ]
   ],
   "flexMode": "full",
   "compactThreshold": 60,
@@ -46,14 +47,14 @@
   "powerline": {
     "enabled": true,
     "separators": [
-      ""
+      "\ue0b4"
     ],
     "separatorInvertBackground": [
       false
     ],
     "startCaps": [],
     "endCaps": [
-      ""
+      "\ue0b4"
     ],
     "theme": "catppuccin",
     "autoAlign": false,
