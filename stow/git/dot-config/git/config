@@ -31,3 +31,9 @@
 
 [merge]
     conflictStyle = zdiff3 # needed for delta
+
+# work repos use the work identity. config.work is supplied by the work branch,
+# so it is absent elsewhere and the include is silently ignored. Must stay last:
+# later config wins, so this would be overridden if it sat above [user].
+[includeIf "gitdir/i:~/work/"]
+    path = config.work
