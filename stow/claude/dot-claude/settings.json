@@ -28,6 +28,19 @@
       "Read(~/.aws/**)"
     ]
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/comment-guard.py\""
+          }
+        ]
+      }
+    ]
+  },
   "model": "opus",
   "statusLine": {
     "type": "command",
