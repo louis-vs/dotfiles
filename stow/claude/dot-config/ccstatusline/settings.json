@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "lines": [
     [
       {
@@ -47,14 +47,14 @@
   "powerline": {
     "enabled": true,
     "separators": [
-      "\ue0b4"
+      ""
     ],
     "separatorInvertBackground": [
       false
     ],
     "startCaps": [],
     "endCaps": [
-      "\ue0b4"
+      ""
     ],
     "theme": "catppuccin",
     "autoAlign": false,
