@@ -28,6 +28,7 @@
       "Read(~/.aws/**)"
     ]
   },
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -41,7 +42,6 @@
       }
     ]
   },
-  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "bunx -y ccstatusline@latest",
